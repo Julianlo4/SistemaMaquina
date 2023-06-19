@@ -166,6 +166,7 @@ void medirTemperaturaHumedadLuz(){
   else{
     currentInput = Input::Unknown;
   }
+  asyncTaskTimeOut10Seg.Start();
 }
 
 /*F**************************************************************************
@@ -415,6 +416,7 @@ void mensajeAlerta()
   Serial.println("Alerta Seguridad");
   lcd.setCursor(3, 1);
   lcd.setCursor(0, 0);
+  asyncTaskTimeOut6Seg.Start();
 }
 
 /*F**************************************************************************
