@@ -5,12 +5,12 @@
   Andrés Sandino  asandino@unicauca.edu.co
 
 */ 
-// -- no sabo--
+
 #include "pinOut.h"
 #include <Servo.h>
 #include "ConstumChar.h"
 uint64_t value = 0;
-//------------
+
 /********************************************//**
  *  Temperature sensor control functions
  ***********************************************/
@@ -96,7 +96,7 @@ StateMachine stateMachine(5, 8);
 /********************************************//**
 
 /********************************************//**
- *  sonidito melo
+ *  Sound control functions
  ***********************************************/
  #include "sound.h"
 void sonidoEntrar();
@@ -163,11 +163,11 @@ void inicilizarComponentes(){
 /*F**************************************************************************
 * NAME: actualizarCursor
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Define timeout_T1 function for to leaf the state ALERT_D
+* Toggles the cursor on an LCD display based on a time-based condition
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -180,13 +180,13 @@ void actualizarCursor() {
   }
 }
 /*F**************************************************************************
-* NAME: timeout_T1
+* NAME: tiempoSalida1
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Define timeout_T1 function for to leaf the state ALERT_D
+* Handles the completion of Time T1
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -196,12 +196,36 @@ void tiempoSalida1(){
   currentInput = Input::senialDos;
   updateInputStateMachine();
 }
+/*F**************************************************************************
+* NAME: tiempoSalida2
+*----------------------------------------------------------------------------
+* PARAMS:   none
+* return:   none
+*----------------------------------------------------------------------------
+* PURPOSE:
+* Handles the completion of Time T2
+*----------------------------------------------------------------------------
+* NOTE:
+* 
+*****************************************************************************/
 
 void tiempoSalida2(){
   DEBUG("T2_END");
   currentInput = Input::senialUno;
   updateInputStateMachine();
 }
+/*F**************************************************************************
+* NAME: tiempoSalida3
+*----------------------------------------------------------------------------
+* PARAMS:   none
+* return:   none
+*----------------------------------------------------------------------------
+* PURPOSE:
+* Handles the completion of Time T3
+*----------------------------------------------------------------------------
+* NOTE:
+* 
+*****************************************************************************/
 
 void tiempoSalida3(){
   DEBUG("T3_END");
@@ -211,11 +235,11 @@ void tiempoSalida3(){
 /*F**************************************************************************
 * NAME: sonidoEntrar
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Define timeout_T1 function for to leaf the state ALERT_D
+* Plays a sequence of tones on a buzzer to create a sound effect
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -232,11 +256,11 @@ for (int i = 0; i < 25; i++) {			// bucle repite 25 veces
 /*F**************************************************************************
 * NAME: sonidoErrado
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Define timeout_T1 function for to leaf the state ALERT_D
+* Plays an error sound on a buzzer
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -249,11 +273,11 @@ void sonidoErrado(){
 /*F**************************************************************************
 * NAME: sonidoBloqueado
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Define timeout_T1 function for to leaf the state ALERT_D
+* Plays a sequence of tones on a buzzer to create a "blocked" sound effect
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -270,11 +294,11 @@ for (int i = 0; i < 5; i++) {			// bucle repite 25 veces
 /*F**************************************************************************
 * NAME: mostrarTemp
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Define timeout_T1 function for to leaf the state ALERT_D
+* Reads humidity and temperature data from a DHT11 sensor and displays it on both the Serial monitor and an LCD display
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -314,11 +338,11 @@ void mostrarTemp(){
 /*F**************************************************************************
 * NAME: mostrarLuz
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Define timeout_T1 function for to leaf the state ALERT_D
+* Reads the light level from a photocell and displays it on both the Serial monitor and an LCD display
 *----------------------------------------------------------------------------
 * NOTE:
 * 

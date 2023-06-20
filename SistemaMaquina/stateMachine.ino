@@ -1,8 +1,8 @@
 
 /*F**************************************************************************
-* NAME: setup_State_Machine
+* NAME: setupStateMachine
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
@@ -42,9 +42,9 @@ void setupStateMachine()
 }
 
 /*F**************************************************************************
-* NAME: read_data
+* NAME: readData
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   nonce
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
@@ -83,13 +83,13 @@ void readData(){
 }
 
 /*F**************************************************************************
-* NAME: state_Low
+* NAME: sistemaClave
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Check conditions for state_LOW_A
+* Implements a password-based system to control access and performs actions based on the entered password
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -145,13 +145,13 @@ void sistemaClave(){
 }
 
 /*F**************************************************************************
-* NAME: state_Normal
+* NAME: medirTemperaturaHumedadLuz
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Check conditions for state_NORMAL_B
+* Initiates the measurement of temperature, humidity, and light levels and performs actions based on the measured values
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -170,13 +170,13 @@ void medirTemperaturaHumedadLuz(){
 }
 
 /*F**************************************************************************
-* NAME: state_High
+* NAME: activarAlarmaAmbiental
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Check conditions for state_HIGH_C
+* Activates the environmental alarm based on temperature readings and performs actions accordingly
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -196,13 +196,13 @@ void activarAlarmaAmbiental(){
 }
 
 /*F**************************************************************************
-* NAME: state_Alert
+* NAME: ventasPuertas
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Check conditions for state_ALERT_D
+* Handles events related to window and door operations
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -214,9 +214,9 @@ void ventasPuertas(){
   asyncTaskTimeOut2Seg.Start();
 }
 /*F**************************************************************************
-* NAME: update_Input_State_Machine
+* NAME: updateInputStateMachine
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
@@ -244,13 +244,13 @@ void updateInputStateMachine()
 }
 
 /*F**************************************************************************
-* NAME: input_LowA
+* NAME: mensajeBienvenida
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Execute actions when entering state LOW_A
+* Displays a welcome message and initializes the system
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -277,13 +277,13 @@ void mensajeBienvenida() {
 
 
 /*F**************************************************************************
-* NAME: output_LowA
+* NAME: salidaSeguridad
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Execute actions when leaving state LOW_A
+* Handles the transition from the security system to events
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -295,13 +295,13 @@ void salidaSeguridad()
 }
 
 /*F**************************************************************************
-* NAME: input_NormalB
+* NAME: mensajeEvento
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Execute actions when entering state NORMAL_B
+* Displays a message related to an event
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -318,13 +318,13 @@ void mensajeEvento()
 }
 
 /*F**************************************************************************
-* NAME: output_NormalB
+* NAME: salidaEvento
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Execute actions when leaving state NORMAL_B
+* Handles the transition from events to the environmental monitoring system
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -334,7 +334,18 @@ void salidaEvento()
    DEBUG("Dejando eventos");
   Serial.println("Pasando de eventos a monitor ambiental");
 }
-
+/*F**************************************************************************
+* NAME: mensajeMonitor
+*----------------------------------------------------------------------------
+* PARAMS:   none
+* return:   none
+*----------------------------------------------------------------------------
+* PURPOSE:
+* Displays a message related to the environmental monitoring system
+*----------------------------------------------------------------------------
+* NOTE:
+* 
+*****************************************************************************/
 void mensajeMonitor()
 {
   currentInput = Input::Unknown;
@@ -345,7 +356,18 @@ void mensajeMonitor()
   lcd.setCursor(3, 1);
   lcd.setCursor(0, 0);
 }
-
+/*F**************************************************************************
+* NAME: salidaMonitor
+*----------------------------------------------------------------------------
+* PARAMS:   none
+* return:   none
+*----------------------------------------------------------------------------
+* PURPOSE:
+* Handles the transition from the environmental monitoring system to the environmental alarm system
+*----------------------------------------------------------------------------
+* NOTE:
+* 
+*****************************************************************************/
 void salidaMonitor()
 {
    DEBUG("Dejando monitor ambiental");
@@ -354,13 +376,13 @@ void salidaMonitor()
 
 
 /*F**************************************************************************
-* NAME: input_HighC
+* NAME: mensajeAlarma
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Execute actions when entering state HIGH_C
+* Displays a message related to the environmental alarm system
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -377,13 +399,13 @@ void mensajeAlarma()
 }
 
 /*F**************************************************************************
-* NAME: output_HighC
+* NAME: salidaAlarma
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Execute actions when leaving state HIGH_C
+* Handles the transition from the environmental alarm system to the security alert system
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -396,13 +418,13 @@ void salidaAlarma()
 }
 
 /*F**************************************************************************
-* NAME: input_AlertD
+* NAME: mensajeAlerta
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Execute actions when entering state ALERT_D
+* Displays a message related to the security alert system and starts a timeout task
 *----------------------------------------------------------------------------
 * NOTE:
 * 
@@ -420,13 +442,13 @@ void mensajeAlerta()
 }
 
 /*F**************************************************************************
-* NAME: output_AlertD
+* NAME: salidaAlerta(
 *----------------------------------------------------------------------------
-* PARAMS:
+* PARAMS:   none
 * return:   none
 *----------------------------------------------------------------------------
 * PURPOSE:
-* Execute actions when leaving state ALERT_D
+* Handles the transition from the security alert system to the events system
 *----------------------------------------------------------------------------
 * NOTE:
 * 
