@@ -1,0 +1,242 @@
+\doxysection{pin\+Out.\+h File Reference}
+\hypertarget{pin_out_8h}{}\label{pin_out_8h}\index{pinOut.h@{pinOut.h}}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{pin_out_8h_aca338dbd19d7940923334629f6e5f3b7}{LED\+\_\+\+GREEN}}~A7
+\item 
+\#define \mbox{\hyperlink{pin_out_8h_a31e20330f8ce94e0dd10b005a15c5898}{LED\+\_\+\+RED}}~A5
+\item 
+\#define \mbox{\hyperlink{pin_out_8h_ae2e40566d27689f8581d7b0f12271d45}{LED\+\_\+\+BLUE}}~A6
+\item 
+\#define \mbox{\hyperlink{pin_out_8h_a145103118f6d9d1129aa4509cf214a13}{BUZZER}}~A14
+\item 
+\#define \mbox{\hyperlink{pin_out_8h_a79111e78831efb8ac76fa8123357475e}{DHT11\+\_\+\+PIN}}~A15
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const byte \mbox{\hyperlink{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}{KEYPAD\+\_\+\+ROWS}} = 4
+\item 
+const byte \mbox{\hyperlink{pin_out_8h_a11f9025ef955263da5731a506b2d830d}{KEYPAD\+\_\+\+COLS}} = 4
+\item 
+byte \mbox{\hyperlink{pin_out_8h_a537de3b3399ca7c8fdec5862538861ab}{row\+Pins}} \mbox{[}\mbox{\hyperlink{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}{KEYPAD\+\_\+\+ROWS}}\mbox{]} = \{5, 4, 3, 2\}
+\item 
+byte \mbox{\hyperlink{pin_out_8h_a3c964a40ceee38dff58e11bf85ebcf5e}{col\+Pins}} \mbox{[}\mbox{\hyperlink{pin_out_8h_a11f9025ef955263da5731a506b2d830d}{KEYPAD\+\_\+\+COLS}}\mbox{]} = \{A3, A2, A1, A4\}
+\item 
+bool \mbox{\hyperlink{pin_out_8h_a3b0de9b2bd862a0a6f31ec0ad95fb8eb}{activar\+Bloqueo}} = false
+\item 
+char \mbox{\hyperlink{pin_out_8h_afa84c2e2bc44a599431faefb07d2f607}{password}} \mbox{[}6\mbox{]}
+\item 
+char \mbox{\hyperlink{pin_out_8h_a71efda6978641548f428da4563415ed4}{password\+Correcta}} \mbox{[}$\,$\mbox{]} = \"{}12345\"{}
+\item 
+unsigned char \mbox{\hyperlink{pin_out_8h_a01494b8fd5801ba9e205324f4b1545ea}{i}} = 0
+\item 
+byte \mbox{\hyperlink{pin_out_8h_a94f5b83df4e7e681da46bfa503ac6b1a}{intentos}} = 3
+\item 
+const int \mbox{\hyperlink{pin_out_8h_a8450960731db3add8cee227018677825}{photocell\+Pin}} = A10
+\item 
+const int \mbox{\hyperlink{pin_out_8h_a2cd9f0d96c9cd0637798de3baa7aee60}{led\+Pin}} = 13
+\item 
+const byte \mbox{\hyperlink{pin_out_8h_add4bad84eee39420fd1322a814152c31}{temperatura\+Normal}} = 30
+\item 
+const byte \mbox{\hyperlink{pin_out_8h_a281867d3077f2d160c0c599a14380805}{temperatura\+Alta}} = 32
+\item 
+unsigned int \mbox{\hyperlink{pin_out_8h_af9c12e858fceb17d5881edc91bf6abf2}{tiempo}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{pin_out_8h_a145103118f6d9d1129aa4509cf214a13}\label{pin_out_8h_a145103118f6d9d1129aa4509cf214a13} 
+\index{pinOut.h@{pinOut.h}!BUZZER@{BUZZER}}
+\index{BUZZER@{BUZZER}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{BUZZER}{BUZZER}}
+{\footnotesize\ttfamily \#define BUZZER~A14}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00004}{4}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a79111e78831efb8ac76fa8123357475e}\label{pin_out_8h_a79111e78831efb8ac76fa8123357475e} 
+\index{pinOut.h@{pinOut.h}!DHT11\_PIN@{DHT11\_PIN}}
+\index{DHT11\_PIN@{DHT11\_PIN}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{DHT11\_PIN}{DHT11\_PIN}}
+{\footnotesize\ttfamily \#define DHT11\+\_\+\+PIN~A15}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00005}{5}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_ae2e40566d27689f8581d7b0f12271d45}\label{pin_out_8h_ae2e40566d27689f8581d7b0f12271d45} 
+\index{pinOut.h@{pinOut.h}!LED\_BLUE@{LED\_BLUE}}
+\index{LED\_BLUE@{LED\_BLUE}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{LED\_BLUE}{LED\_BLUE}}
+{\footnotesize\ttfamily \#define LED\+\_\+\+BLUE~A6}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00003}{3}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_aca338dbd19d7940923334629f6e5f3b7}\label{pin_out_8h_aca338dbd19d7940923334629f6e5f3b7} 
+\index{pinOut.h@{pinOut.h}!LED\_GREEN@{LED\_GREEN}}
+\index{LED\_GREEN@{LED\_GREEN}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{LED\_GREEN}{LED\_GREEN}}
+{\footnotesize\ttfamily \#define LED\+\_\+\+GREEN~A7}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00001}{1}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a31e20330f8ce94e0dd10b005a15c5898}\label{pin_out_8h_a31e20330f8ce94e0dd10b005a15c5898} 
+\index{pinOut.h@{pinOut.h}!LED\_RED@{LED\_RED}}
+\index{LED\_RED@{LED\_RED}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{LED\_RED}{LED\_RED}}
+{\footnotesize\ttfamily \#define LED\+\_\+\+RED~A5}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00002}{2}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{pin_out_8h_a3b0de9b2bd862a0a6f31ec0ad95fb8eb}\label{pin_out_8h_a3b0de9b2bd862a0a6f31ec0ad95fb8eb} 
+\index{pinOut.h@{pinOut.h}!activarBloqueo@{activarBloqueo}}
+\index{activarBloqueo@{activarBloqueo}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{activarBloqueo}{activarBloqueo}}
+{\footnotesize\ttfamily bool activar\+Bloqueo = false}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00013}{13}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a3c964a40ceee38dff58e11bf85ebcf5e}\label{pin_out_8h_a3c964a40ceee38dff58e11bf85ebcf5e} 
+\index{pinOut.h@{pinOut.h}!colPins@{colPins}}
+\index{colPins@{colPins}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{colPins}{colPins}}
+{\footnotesize\ttfamily byte col\+Pins\mbox{[}\mbox{\hyperlink{pin_out_8h_a11f9025ef955263da5731a506b2d830d}{KEYPAD\+\_\+\+COLS}}\mbox{]} = \{A3, A2, A1, A4\}}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00011}{11}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a01494b8fd5801ba9e205324f4b1545ea}\label{pin_out_8h_a01494b8fd5801ba9e205324f4b1545ea} 
+\index{pinOut.h@{pinOut.h}!i@{i}}
+\index{i@{i}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{i}{i}}
+{\footnotesize\ttfamily unsigned char i = 0}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00016}{16}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a94f5b83df4e7e681da46bfa503ac6b1a}\label{pin_out_8h_a94f5b83df4e7e681da46bfa503ac6b1a} 
+\index{pinOut.h@{pinOut.h}!intentos@{intentos}}
+\index{intentos@{intentos}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{intentos}{intentos}}
+{\footnotesize\ttfamily byte intentos = 3}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00017}{17}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a11f9025ef955263da5731a506b2d830d}\label{pin_out_8h_a11f9025ef955263da5731a506b2d830d} 
+\index{pinOut.h@{pinOut.h}!KEYPAD\_COLS@{KEYPAD\_COLS}}
+\index{KEYPAD\_COLS@{KEYPAD\_COLS}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{KEYPAD\_COLS}{KEYPAD\_COLS}}
+{\footnotesize\ttfamily const byte KEYPAD\+\_\+\+COLS = 4}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00009}{9}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}\label{pin_out_8h_a332148869b2d5d97d18079aa63a2c553} 
+\index{pinOut.h@{pinOut.h}!KEYPAD\_ROWS@{KEYPAD\_ROWS}}
+\index{KEYPAD\_ROWS@{KEYPAD\_ROWS}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{KEYPAD\_ROWS}{KEYPAD\_ROWS}}
+{\footnotesize\ttfamily const byte KEYPAD\+\_\+\+ROWS = 4}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00008}{8}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a2cd9f0d96c9cd0637798de3baa7aee60}\label{pin_out_8h_a2cd9f0d96c9cd0637798de3baa7aee60} 
+\index{pinOut.h@{pinOut.h}!ledPin@{ledPin}}
+\index{ledPin@{ledPin}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{ledPin}{ledPin}}
+{\footnotesize\ttfamily const int led\+Pin = 13}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00020}{20}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_afa84c2e2bc44a599431faefb07d2f607}\label{pin_out_8h_afa84c2e2bc44a599431faefb07d2f607} 
+\index{pinOut.h@{pinOut.h}!password@{password}}
+\index{password@{password}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{password}{password}}
+{\footnotesize\ttfamily char password\mbox{[}6\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00014}{14}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a71efda6978641548f428da4563415ed4}\label{pin_out_8h_a71efda6978641548f428da4563415ed4} 
+\index{pinOut.h@{pinOut.h}!passwordCorrecta@{passwordCorrecta}}
+\index{passwordCorrecta@{passwordCorrecta}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{passwordCorrecta}{passwordCorrecta}}
+{\footnotesize\ttfamily char password\+Correcta\mbox{[}$\,$\mbox{]} = \"{}12345\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00015}{15}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a8450960731db3add8cee227018677825}\label{pin_out_8h_a8450960731db3add8cee227018677825} 
+\index{pinOut.h@{pinOut.h}!photocellPin@{photocellPin}}
+\index{photocellPin@{photocellPin}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{photocellPin}{photocellPin}}
+{\footnotesize\ttfamily const int photocell\+Pin = A10}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00019}{19}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a537de3b3399ca7c8fdec5862538861ab}\label{pin_out_8h_a537de3b3399ca7c8fdec5862538861ab} 
+\index{pinOut.h@{pinOut.h}!rowPins@{rowPins}}
+\index{rowPins@{rowPins}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{rowPins}{rowPins}}
+{\footnotesize\ttfamily byte row\+Pins\mbox{[}\mbox{\hyperlink{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}{KEYPAD\+\_\+\+ROWS}}\mbox{]} = \{5, 4, 3, 2\}}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00010}{10}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_a281867d3077f2d160c0c599a14380805}\label{pin_out_8h_a281867d3077f2d160c0c599a14380805} 
+\index{pinOut.h@{pinOut.h}!temperaturaAlta@{temperaturaAlta}}
+\index{temperaturaAlta@{temperaturaAlta}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{temperaturaAlta}{temperaturaAlta}}
+{\footnotesize\ttfamily const byte temperatura\+Alta = 32}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00022}{22}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_add4bad84eee39420fd1322a814152c31}\label{pin_out_8h_add4bad84eee39420fd1322a814152c31} 
+\index{pinOut.h@{pinOut.h}!temperaturaNormal@{temperaturaNormal}}
+\index{temperaturaNormal@{temperaturaNormal}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{temperaturaNormal}{temperaturaNormal}}
+{\footnotesize\ttfamily const byte temperatura\+Normal = 30}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00021}{21}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+
+\Hypertarget{pin_out_8h_af9c12e858fceb17d5881edc91bf6abf2}\label{pin_out_8h_af9c12e858fceb17d5881edc91bf6abf2} 
+\index{pinOut.h@{pinOut.h}!tiempo@{tiempo}}
+\index{tiempo@{tiempo}!pinOut.h@{pinOut.h}}
+\doxysubsubsection{\texorpdfstring{tiempo}{tiempo}}
+{\footnotesize\ttfamily unsigned int tiempo = 0}
+
+
+
+Definition at line \mbox{\hyperlink{pin_out_8h_source_l00023}{23}} of file \mbox{\hyperlink{pin_out_8h_source}{pin\+Out.\+h}}.
+

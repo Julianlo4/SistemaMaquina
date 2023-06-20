@@ -1,0 +1,462 @@
+\doxysection{Sistema\+Maquina.\+ino File Reference}
+\hypertarget{_sistema_maquina_8ino}{}\label{_sistema_maquina_8ino}\index{SistemaMaquina.ino@{SistemaMaquina.ino}}
+{\ttfamily \#include \"{}pin\+Out.\+h\"{}}\newline
+{\ttfamily \#include $<$Servo.\+h$>$}\newline
+{\ttfamily \#include \"{}Constum\+Char.\+h\"{}}\newline
+{\ttfamily \#include \"{}DHTStable.\+h\"{}}\newline
+{\ttfamily \#include $<$Liquid\+Crystal.\+h$>$}\newline
+{\ttfamily \#include $<$Keypad.\+h$>$}\newline
+{\ttfamily \#include \"{}Async\+Task\+Lib.\+h\"{}}\newline
+{\ttfamily \#include \"{}State\+Machine\+Lib.\+h\"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_sistema_maquina_8ino_a8a979668ecb044c9ac0e5017107f1d52}{DEBUG}}(a)~Serial.\+print(millis()); Serial.\+print(\"{}\+: \"{}); Serial.\+println(a);
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8}{State}} \{ \newline
+\mbox{\hyperlink{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8ae1b43b93916f2cfd8bd6f3d5190aec4c}{ingreso\+Seguridad}} = 0
+, \mbox{\hyperlink{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8af4649cce791bebf507485ac6bb82e3b6}{evento\+Puerta\+Ventana}} = 1
+, \mbox{\hyperlink{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8ad38a4f3645d9ea91edf55d4e814012a9}{monitor\+Ambiental}} = 2
+, \mbox{\hyperlink{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8a0170afb9c2c4f35617106ca58dda3568}{alarma\+Ambiental}} = 3
+, \newline
+\mbox{\hyperlink{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8a98f05931960ae4ea52b10b76c3a6d596}{alerta\+Seguridad}} = 4
+ \}
+\item 
+enum \mbox{\hyperlink{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090}{Input}} \{ \newline
+\mbox{\hyperlink{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090af6749e663b7ac48560ea357f9a0e833a}{senial\+Uno}} = 0
+, \mbox{\hyperlink{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090a0bec469890c6a806efefe47e0ec8ec71}{senial\+Dos}} = 1
+, \mbox{\hyperlink{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090ae60098f842dadc274a375e0a40a23737}{senial\+Tres}} = 2
+, \mbox{\hyperlink{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090ade944e95fc7ae86940030f573e0fc878}{senial\+Cuatro}} = 3
+, \newline
+\mbox{\hyperlink{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090a4e81c184ac3ad48a389cd4454c4a05bb}{Unknown}} = 4
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Liquid\+Crystal \mbox{\hyperlink{_sistema_maquina_8ino_aca85f744646bfbc6d0f732f3b0b938f3}{lcd}} (12, 11, 10, 9, 8, 7)
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_afedf4220ed9f6711bda358886df8108f}{actualizar\+Cursor}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_afb8d4ce4329ba35239a815a135696ae2}{sistema\+Clave}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_a0252ec202a4a6568c4ac1533728e61c1}{mensaje\+Bienvenida}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_aeca339a83acedb47359e0c398765e687}{mostrar\+Temp}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_afd334a4d81eb488c4fdb218ab49aa436}{mostrar\+Luz}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_a64d72200f3ee2dfc211b55b5bd634e7c}{tiempo\+Salida1}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_a3ecb7e328fecef12a64ef93dd87a1890}{tiempo\+Salida2}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_a0f5346533356ea567b4b3690aa19e60d}{tiempo\+Salida3}} ()
+\item 
+Async\+Task \mbox{\hyperlink{_sistema_maquina_8ino_a21bf3a95856ea9924ba722f0fb131d41}{async\+Task\+Time\+Out2\+Seg}} (2000, true, \mbox{\hyperlink{_sistema_maquina_8ino_a64d72200f3ee2dfc211b55b5bd634e7c}{tiempo\+Salida1}})
+\item 
+Async\+Task \mbox{\hyperlink{_sistema_maquina_8ino_ab0a7f414b4a0767778fc80dd1be3c439}{async\+Task\+Time\+Out10\+Seg}} (10000, true, \mbox{\hyperlink{_sistema_maquina_8ino_a3ecb7e328fecef12a64ef93dd87a1890}{tiempo\+Salida2}})
+\item 
+Async\+Task \mbox{\hyperlink{_sistema_maquina_8ino_a1048b22c7b649f5a3db41d44c4749eff}{async\+Task\+Time\+Out6\+Seg}} (6000, true, \mbox{\hyperlink{_sistema_maquina_8ino_a0f5346533356ea567b4b3690aa19e60d}{tiempo\+Salida3}})
+\item 
+Async\+Task \mbox{\hyperlink{_sistema_maquina_8ino_a11afb6ba55e6d93632d0acc1690c9cae}{async\+Task1}} (2000, true, \mbox{\hyperlink{_sistema_maquina_8ino_aeca339a83acedb47359e0c398765e687}{mostrar\+Temp}})
+\item 
+Async\+Task \mbox{\hyperlink{_sistema_maquina_8ino_adc35bff5c83773761f700b7981066739}{async\+Task2}} (1000, true, \mbox{\hyperlink{_sistema_maquina_8ino_afd334a4d81eb488c4fdb218ab49aa436}{mostrar\+Luz}})
+\item 
+Async\+Task \mbox{\hyperlink{_sistema_maquina_8ino_a58682d6a67b5d8ff806bce6359532be4}{async\+Task\+Seguridad}} (500, true, \mbox{\hyperlink{_sistema_maquina_8ino_afb8d4ce4329ba35239a815a135696ae2}{sistema\+Clave}})
+\item 
+State\+Machine \mbox{\hyperlink{_sistema_maquina_8ino_a2d72512ee8201a631a456c35a7e29be4}{state\+Machine}} (5, 8)
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_a949b51d9fe6245fc349f1b2be2414e0a}{sonido\+Entrar}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_a9a08b52ee75702e498105356d83e4c5c}{sonido\+Errado}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_a116cbbfb3cc34707f05f859a8dd4cde5}{sonido\+Bloqueado}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_ab4a810680471baa7608bf17e48883123}{inicializar\+Componentes}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\item 
+void \mbox{\hyperlink{_sistema_maquina_8ino_ae7557ae93ec331fb324b37cd1e14c887}{inicilizar\+Componentes}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+DHTStable \mbox{\hyperlink{_sistema_maquina_8ino_aff26b1d15dd10336e33d0138e24aa8df}{DHT}}
+\item 
+char \mbox{\hyperlink{_sistema_maquina_8ino_a6cd72e3b474ca29b76d4a7758b0bfff5}{keys}} \mbox{[}\mbox{\hyperlink{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}{KEYPAD\+\_\+\+ROWS}}\mbox{]}\mbox{[}\mbox{\hyperlink{pin_out_8h_a11f9025ef955263da5731a506b2d830d}{KEYPAD\+\_\+\+COLS}}\mbox{]}
+\item 
+Keypad \mbox{\hyperlink{_sistema_maquina_8ino_a0e6c3cc7e8c762ab0ca1fa2296d7bbfe}{keypad}} = Keypad(make\+Keymap(\mbox{\hyperlink{_sistema_maquina_8ino_a6cd72e3b474ca29b76d4a7758b0bfff5}{keys}}), \mbox{\hyperlink{pin_out_8h_a537de3b3399ca7c8fdec5862538861ab}{row\+Pins}}, \mbox{\hyperlink{pin_out_8h_a3c964a40ceee38dff58e11bf85ebcf5e}{col\+Pins}}, \mbox{\hyperlink{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}{KEYPAD\+\_\+\+ROWS}}, \mbox{\hyperlink{pin_out_8h_a11f9025ef955263da5731a506b2d830d}{KEYPAD\+\_\+\+COLS}})
+\item 
+\mbox{\hyperlink{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090}{Input}} \mbox{\hyperlink{_sistema_maquina_8ino_a0563e10870312b52f7f25cfddf778db0}{current\+Input}}
+\item 
+int \mbox{\hyperlink{_sistema_maquina_8ino_a77e9ff6424049425457fcf0018cb8f8a}{temp\+Value}}
+\item 
+String \mbox{\hyperlink{_sistema_maquina_8ino_a3aec325742447d04899a52f801481456}{in\+String}} = \"{}\"{}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{_sistema_maquina_8ino_a4e630859cc0e2a22bd6acf39a6a8e218}{value}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_sistema_maquina_8ino_a8a979668ecb044c9ac0e5017107f1d52}\label{_sistema_maquina_8ino_a8a979668ecb044c9ac0e5017107f1d52} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!DEBUG@{DEBUG}}
+\index{DEBUG@{DEBUG}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{DEBUG}{DEBUG}}
+{\footnotesize\ttfamily \#define DEBUG(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~Serial.\+print(millis()); Serial.\+print(\"{}\+: \"{}); Serial.\+println(a);}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00024}{24}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090}\label{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!Input@{Input}}
+\index{Input@{Input}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{Input}{Input}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090}{Input}}}
+
+An enum type. define Inputs in State Machine \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{senialUno@{senialUno}!SistemaMaquina.ino@{SistemaMaquina.ino}}\index{SistemaMaquina.ino@{SistemaMaquina.ino}!senialUno@{senialUno}}}\Hypertarget{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090af6749e663b7ac48560ea357f9a0e833a}\label{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090af6749e663b7ac48560ea357f9a0e833a} 
+senial\+Uno&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{senialDos@{senialDos}!SistemaMaquina.ino@{SistemaMaquina.ino}}\index{SistemaMaquina.ino@{SistemaMaquina.ino}!senialDos@{senialDos}}}\Hypertarget{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090a0bec469890c6a806efefe47e0ec8ec71}\label{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090a0bec469890c6a806efefe47e0ec8ec71} 
+senial\+Dos&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{senialTres@{senialTres}!SistemaMaquina.ino@{SistemaMaquina.ino}}\index{SistemaMaquina.ino@{SistemaMaquina.ino}!senialTres@{senialTres}}}\Hypertarget{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090ae60098f842dadc274a375e0a40a23737}\label{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090ae60098f842dadc274a375e0a40a23737} 
+senial\+Tres&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{senialCuatro@{senialCuatro}!SistemaMaquina.ino@{SistemaMaquina.ino}}\index{SistemaMaquina.ino@{SistemaMaquina.ino}!senialCuatro@{senialCuatro}}}\Hypertarget{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090ade944e95fc7ae86940030f573e0fc878}\label{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090ade944e95fc7ae86940030f573e0fc878} 
+senial\+Cuatro&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Unknown@{Unknown}!SistemaMaquina.ino@{SistemaMaquina.ino}}\index{SistemaMaquina.ino@{SistemaMaquina.ino}!Unknown@{Unknown}}}\Hypertarget{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090a4e81c184ac3ad48a389cd4454c4a05bb}\label{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090a4e81c184ac3ad48a389cd4454c4a05bb} 
+Unknown&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00088}{88}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8}\label{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!State@{State}}
+\index{State@{State}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{State}{State}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8}{State}}}
+
+State Machine control functions An enum type. define states in State Machine \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ingresoSeguridad@{ingresoSeguridad}!SistemaMaquina.ino@{SistemaMaquina.ino}}\index{SistemaMaquina.ino@{SistemaMaquina.ino}!ingresoSeguridad@{ingresoSeguridad}}}\Hypertarget{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8ae1b43b93916f2cfd8bd6f3d5190aec4c}\label{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8ae1b43b93916f2cfd8bd6f3d5190aec4c} 
+ingreso\+Seguridad&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{eventoPuertaVentana@{eventoPuertaVentana}!SistemaMaquina.ino@{SistemaMaquina.ino}}\index{SistemaMaquina.ino@{SistemaMaquina.ino}!eventoPuertaVentana@{eventoPuertaVentana}}}\Hypertarget{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8af4649cce791bebf507485ac6bb82e3b6}\label{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8af4649cce791bebf507485ac6bb82e3b6} 
+evento\+Puerta\+Ventana&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{monitorAmbiental@{monitorAmbiental}!SistemaMaquina.ino@{SistemaMaquina.ino}}\index{SistemaMaquina.ino@{SistemaMaquina.ino}!monitorAmbiental@{monitorAmbiental}}}\Hypertarget{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8ad38a4f3645d9ea91edf55d4e814012a9}\label{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8ad38a4f3645d9ea91edf55d4e814012a9} 
+monitor\+Ambiental&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{alarmaAmbiental@{alarmaAmbiental}!SistemaMaquina.ino@{SistemaMaquina.ino}}\index{SistemaMaquina.ino@{SistemaMaquina.ino}!alarmaAmbiental@{alarmaAmbiental}}}\Hypertarget{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8a0170afb9c2c4f35617106ca58dda3568}\label{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8a0170afb9c2c4f35617106ca58dda3568} 
+alarma\+Ambiental&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{alertaSeguridad@{alertaSeguridad}!SistemaMaquina.ino@{SistemaMaquina.ino}}\index{SistemaMaquina.ino@{SistemaMaquina.ino}!alertaSeguridad@{alertaSeguridad}}}\Hypertarget{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8a98f05931960ae4ea52b10b76c3a6d596}\label{_sistema_maquina_8ino_a5d74787dedbc4e11c1ab15bf487e61f8a98f05931960ae4ea52b10b76c3a6d596} 
+alerta\+Seguridad&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00076}{76}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_sistema_maquina_8ino_afedf4220ed9f6711bda358886df8108f}\label{_sistema_maquina_8ino_afedf4220ed9f6711bda358886df8108f} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!actualizarCursor@{actualizarCursor}}
+\index{actualizarCursor@{actualizarCursor}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{actualizarCursor()}{actualizarCursor()}}
+{\footnotesize\ttfamily void actualizar\+Cursor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Update cursor control Task control functions 
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00185}{185}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a11afb6ba55e6d93632d0acc1690c9cae}\label{_sistema_maquina_8ino_a11afb6ba55e6d93632d0acc1690c9cae} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!asyncTask1@{asyncTask1}}
+\index{asyncTask1@{asyncTask1}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{asyncTask1()}{asyncTask1()}}
+{\footnotesize\ttfamily Async\+Task async\+Task1 (\begin{DoxyParamCaption}\item[{2000}]{,  }\item[{true}]{,  }\item[{\mbox{\hyperlink{_sistema_maquina_8ino_aeca339a83acedb47359e0c398765e687}{mostrar\+Temp}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{_sistema_maquina_8ino_adc35bff5c83773761f700b7981066739}\label{_sistema_maquina_8ino_adc35bff5c83773761f700b7981066739} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!asyncTask2@{asyncTask2}}
+\index{asyncTask2@{asyncTask2}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{asyncTask2()}{asyncTask2()}}
+{\footnotesize\ttfamily Async\+Task async\+Task2 (\begin{DoxyParamCaption}\item[{1000}]{,  }\item[{true}]{,  }\item[{\mbox{\hyperlink{_sistema_maquina_8ino_afd334a4d81eb488c4fdb218ab49aa436}{mostrar\+Luz}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{_sistema_maquina_8ino_a58682d6a67b5d8ff806bce6359532be4}\label{_sistema_maquina_8ino_a58682d6a67b5d8ff806bce6359532be4} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!asyncTaskSeguridad@{asyncTaskSeguridad}}
+\index{asyncTaskSeguridad@{asyncTaskSeguridad}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{asyncTaskSeguridad()}{asyncTaskSeguridad()}}
+{\footnotesize\ttfamily Async\+Task async\+Task\+Seguridad (\begin{DoxyParamCaption}\item[{500}]{,  }\item[{true}]{,  }\item[{\mbox{\hyperlink{_sistema_maquina_8ino_afb8d4ce4329ba35239a815a135696ae2}{sistema\+Clave}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{_sistema_maquina_8ino_ab0a7f414b4a0767778fc80dd1be3c439}\label{_sistema_maquina_8ino_ab0a7f414b4a0767778fc80dd1be3c439} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!asyncTaskTimeOut10Seg@{asyncTaskTimeOut10Seg}}
+\index{asyncTaskTimeOut10Seg@{asyncTaskTimeOut10Seg}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{asyncTaskTimeOut10Seg()}{asyncTaskTimeOut10Seg()}}
+{\footnotesize\ttfamily Async\+Task async\+Task\+Time\+Out10\+Seg (\begin{DoxyParamCaption}\item[{10000}]{,  }\item[{true}]{,  }\item[{\mbox{\hyperlink{_sistema_maquina_8ino_a3ecb7e328fecef12a64ef93dd87a1890}{tiempo\+Salida2}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{_sistema_maquina_8ino_a21bf3a95856ea9924ba722f0fb131d41}\label{_sistema_maquina_8ino_a21bf3a95856ea9924ba722f0fb131d41} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!asyncTaskTimeOut2Seg@{asyncTaskTimeOut2Seg}}
+\index{asyncTaskTimeOut2Seg@{asyncTaskTimeOut2Seg}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{asyncTaskTimeOut2Seg()}{asyncTaskTimeOut2Seg()}}
+{\footnotesize\ttfamily Async\+Task async\+Task\+Time\+Out2\+Seg (\begin{DoxyParamCaption}\item[{2000}]{,  }\item[{true}]{,  }\item[{\mbox{\hyperlink{_sistema_maquina_8ino_a64d72200f3ee2dfc211b55b5bd634e7c}{tiempo\+Salida1}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{_sistema_maquina_8ino_a1048b22c7b649f5a3db41d44c4749eff}\label{_sistema_maquina_8ino_a1048b22c7b649f5a3db41d44c4749eff} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!asyncTaskTimeOut6Seg@{asyncTaskTimeOut6Seg}}
+\index{asyncTaskTimeOut6Seg@{asyncTaskTimeOut6Seg}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{asyncTaskTimeOut6Seg()}{asyncTaskTimeOut6Seg()}}
+{\footnotesize\ttfamily Async\+Task async\+Task\+Time\+Out6\+Seg (\begin{DoxyParamCaption}\item[{6000}]{,  }\item[{true}]{,  }\item[{\mbox{\hyperlink{_sistema_maquina_8ino_a0f5346533356ea567b4b3690aa19e60d}{tiempo\+Salida3}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{_sistema_maquina_8ino_ab4a810680471baa7608bf17e48883123}\label{_sistema_maquina_8ino_ab4a810680471baa7608bf17e48883123} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!inicializarComponentes@{inicializarComponentes}}
+\index{inicializarComponentes@{inicializarComponentes}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{inicializarComponentes()}{inicializarComponentes()}}
+{\footnotesize\ttfamily void inicializar\+Componentes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{_sistema_maquina_8ino_ae7557ae93ec331fb324b37cd1e14c887}\label{_sistema_maquina_8ino_ae7557ae93ec331fb324b37cd1e14c887} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!inicilizarComponentes@{inicilizarComponentes}}
+\index{inicilizarComponentes@{inicilizarComponentes}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{inicilizarComponentes()}{inicilizarComponentes()}}
+{\footnotesize\ttfamily void inicilizar\+Componentes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00159}{159}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_aca85f744646bfbc6d0f732f3b0b938f3}\label{_sistema_maquina_8ino_aca85f744646bfbc6d0f732f3b0b938f3} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!lcd@{lcd}}
+\index{lcd@{lcd}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{lcd()}{lcd()}}
+{\footnotesize\ttfamily Liquid\+Crystal lcd (\begin{DoxyParamCaption}\item[{12}]{,  }\item[{11}]{,  }\item[{10}]{,  }\item[{9}]{,  }\item[{8}]{,  }\item[{7}]{ }\end{DoxyParamCaption})}
+
+LCD control functions \Hypertarget{_sistema_maquina_8ino_afe461d27b9c48d5921c00d521181f12f}\label{_sistema_maquina_8ino_afe461d27b9c48d5921c00d521181f12f} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!loop@{loop}}
+\index{loop@{loop}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00131}{131}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a0252ec202a4a6568c4ac1533728e61c1}\label{_sistema_maquina_8ino_a0252ec202a4a6568c4ac1533728e61c1} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!mensajeBienvenida@{mensajeBienvenida}}
+\index{mensajeBienvenida@{mensajeBienvenida}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{mensajeBienvenida()}{mensajeBienvenida()}}
+{\footnotesize\ttfamily void mensaje\+Bienvenida (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Message welcome control Task control functions 
+
+Definition at line \mbox{\hyperlink{state_machine_8ino_source_l00258}{258}} of file \mbox{\hyperlink{state_machine_8ino_source}{state\+Machine.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_afd334a4d81eb488c4fdb218ab49aa436}\label{_sistema_maquina_8ino_afd334a4d81eb488c4fdb218ab49aa436} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!mostrarLuz@{mostrarLuz}}
+\index{mostrarLuz@{mostrarLuz}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{mostrarLuz()}{mostrarLuz()}}
+{\footnotesize\ttfamily void mostrar\+Luz (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00360}{360}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_aeca339a83acedb47359e0c398765e687}\label{_sistema_maquina_8ino_aeca339a83acedb47359e0c398765e687} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!mostrarTemp@{mostrarTemp}}
+\index{mostrarTemp@{mostrarTemp}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{mostrarTemp()}{mostrarTemp()}}
+{\footnotesize\ttfamily void mostrar\+Temp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Asynchronous Task control functions 
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00316}{316}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a4fc01d736fe50cf5b977f755b675f11d}\label{_sistema_maquina_8ino_a4fc01d736fe50cf5b977f755b675f11d} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!setup@{setup}}
+\index{setup@{setup}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00121}{121}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_afb8d4ce4329ba35239a815a135696ae2}\label{_sistema_maquina_8ino_afb8d4ce4329ba35239a815a135696ae2} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!sistemaClave@{sistemaClave}}
+\index{sistemaClave@{sistemaClave}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{sistemaClave()}{sistemaClave()}}
+{\footnotesize\ttfamily void sistema\+Clave (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Segurity control Task control functions 
+
+Definition at line \mbox{\hyperlink{state_machine_8ino_source_l00097}{97}} of file \mbox{\hyperlink{state_machine_8ino_source}{state\+Machine.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a116cbbfb3cc34707f05f859a8dd4cde5}\label{_sistema_maquina_8ino_a116cbbfb3cc34707f05f859a8dd4cde5} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!sonidoBloqueado@{sonidoBloqueado}}
+\index{sonidoBloqueado@{sonidoBloqueado}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{sonidoBloqueado()}{sonidoBloqueado()}}
+{\footnotesize\ttfamily void sonido\+Bloqueado (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00295}{295}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a949b51d9fe6245fc349f1b2be2414e0a}\label{_sistema_maquina_8ino_a949b51d9fe6245fc349f1b2be2414e0a} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!sonidoEntrar@{sonidoEntrar}}
+\index{sonidoEntrar@{sonidoEntrar}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{sonidoEntrar()}{sonidoEntrar()}}
+{\footnotesize\ttfamily void sonido\+Entrar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+/\texorpdfstring{$\ast$}{*} Sound control functions 
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00257}{257}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a9a08b52ee75702e498105356d83e4c5c}\label{_sistema_maquina_8ino_a9a08b52ee75702e498105356d83e4c5c} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!sonidoErrado@{sonidoErrado}}
+\index{sonidoErrado@{sonidoErrado}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{sonidoErrado()}{sonidoErrado()}}
+{\footnotesize\ttfamily void sonido\+Errado (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00278}{278}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a2d72512ee8201a631a456c35a7e29be4}\label{_sistema_maquina_8ino_a2d72512ee8201a631a456c35a7e29be4} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!stateMachine@{stateMachine}}
+\index{stateMachine@{stateMachine}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{stateMachine()}{stateMachine()}}
+{\footnotesize\ttfamily State\+Machine state\+Machine (\begin{DoxyParamCaption}\item[{5}]{,  }\item[{8}]{ }\end{DoxyParamCaption})}
+
+Create new State\+Machine 5 states and 8 transitions \Hypertarget{_sistema_maquina_8ino_a64d72200f3ee2dfc211b55b5bd634e7c}\label{_sistema_maquina_8ino_a64d72200f3ee2dfc211b55b5bd634e7c} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!tiempoSalida1@{tiempoSalida1}}
+\index{tiempoSalida1@{tiempoSalida1}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{tiempoSalida1()}{tiempoSalida1()}}
+{\footnotesize\ttfamily void tiempo\+Salida1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00204}{204}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a3ecb7e328fecef12a64ef93dd87a1890}\label{_sistema_maquina_8ino_a3ecb7e328fecef12a64ef93dd87a1890} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!tiempoSalida2@{tiempoSalida2}}
+\index{tiempoSalida2@{tiempoSalida2}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{tiempoSalida2()}{tiempoSalida2()}}
+{\footnotesize\ttfamily void tiempo\+Salida2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00222}{222}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a0f5346533356ea567b4b3690aa19e60d}\label{_sistema_maquina_8ino_a0f5346533356ea567b4b3690aa19e60d} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!tiempoSalida3@{tiempoSalida3}}
+\index{tiempoSalida3@{tiempoSalida3}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{tiempoSalida3()}{tiempoSalida3()}}
+{\footnotesize\ttfamily void tiempo\+Salida3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00240}{240}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{_sistema_maquina_8ino_a0563e10870312b52f7f25cfddf778db0}\label{_sistema_maquina_8ino_a0563e10870312b52f7f25cfddf778db0} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!currentInput@{currentInput}}
+\index{currentInput@{currentInput}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{currentInput}{currentInput}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_sistema_maquina_8ino_a080a822f0093973313bd644e517a5090}{Input}} current\+Input}
+
+Stores last user input 
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00098}{98}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_aff26b1d15dd10336e33d0138e24aa8df}\label{_sistema_maquina_8ino_aff26b1d15dd10336e33d0138e24aa8df} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!DHT@{DHT}}
+\index{DHT@{DHT}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{DHT}{DHT}}
+{\footnotesize\ttfamily DHTStable DHT}
+
+Temperature sensor control functions 
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00017}{17}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a3aec325742447d04899a52f801481456}\label{_sistema_maquina_8ino_a3aec325742447d04899a52f801481456} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!inString@{inString}}
+\index{inString@{inString}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{inString}{inString}}
+{\footnotesize\ttfamily String in\+String = \"{}\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00118}{118}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a0e6c3cc7e8c762ab0ca1fa2296d7bbfe}\label{_sistema_maquina_8ino_a0e6c3cc7e8c762ab0ca1fa2296d7bbfe} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!keypad@{keypad}}
+\index{keypad@{keypad}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{keypad}{keypad}}
+{\footnotesize\ttfamily Keypad keypad = Keypad(make\+Keymap(\mbox{\hyperlink{_sistema_maquina_8ino_a6cd72e3b474ca29b76d4a7758b0bfff5}{keys}}), \mbox{\hyperlink{pin_out_8h_a537de3b3399ca7c8fdec5862538861ab}{row\+Pins}}, \mbox{\hyperlink{pin_out_8h_a3c964a40ceee38dff58e11bf85ebcf5e}{col\+Pins}}, \mbox{\hyperlink{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}{KEYPAD\+\_\+\+ROWS}}, \mbox{\hyperlink{pin_out_8h_a11f9025ef955263da5731a506b2d830d}{KEYPAD\+\_\+\+COLS}})}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00036}{36}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a6cd72e3b474ca29b76d4a7758b0bfff5}\label{_sistema_maquina_8ino_a6cd72e3b474ca29b76d4a7758b0bfff5} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!keys@{keys}}
+\index{keys@{keys}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{keys}{keys}}
+{\footnotesize\ttfamily char keys\mbox{[}\mbox{\hyperlink{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}{KEYPAD\+\_\+\+ROWS}}\mbox{]}\mbox{[}\mbox{\hyperlink{pin_out_8h_a11f9025ef955263da5731a506b2d830d}{KEYPAD\+\_\+\+COLS}}\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \{\textcolor{charliteral}{'1'},\ \textcolor{charliteral}{'2'},\ \textcolor{charliteral}{'3'},\ \textcolor{charliteral}{'A'}\},}
+\DoxyCodeLine{\ \ \{\textcolor{charliteral}{'4'},\ \textcolor{charliteral}{'5'},\ \textcolor{charliteral}{'6'},\ \textcolor{charliteral}{'B'}\},}
+\DoxyCodeLine{\ \ \{\textcolor{charliteral}{'7'},\ \textcolor{charliteral}{'8'},\ \textcolor{charliteral}{'9'},\ \textcolor{charliteral}{'C'}\},}
+\DoxyCodeLine{\ \ \{\textcolor{charliteral}{'.'},\ \textcolor{charliteral}{'0'},\ \textcolor{charliteral}{'='},\ \textcolor{charliteral}{'D'}\}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+keypad control functions 
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00030}{30}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a77e9ff6424049425457fcf0018cb8f8a}\label{_sistema_maquina_8ino_a77e9ff6424049425457fcf0018cb8f8a} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!tempValue@{tempValue}}
+\index{tempValue@{tempValue}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{tempValue}{tempValue}}
+{\footnotesize\ttfamily int temp\+Value}
+
+Define global variables 
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00117}{117}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+
+\Hypertarget{_sistema_maquina_8ino_a4e630859cc0e2a22bd6acf39a6a8e218}\label{_sistema_maquina_8ino_a4e630859cc0e2a22bd6acf39a6a8e218} 
+\index{SistemaMaquina.ino@{SistemaMaquina.ino}!value@{value}}
+\index{value@{value}!SistemaMaquina.ino@{SistemaMaquina.ino}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily uint64\+\_\+t value = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_sistema_maquina_8ino_source_l00119}{119}} of file \mbox{\hyperlink{_sistema_maquina_8ino_source}{Sistema\+Maquina.\+ino}}.
+

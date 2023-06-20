@@ -9,7 +9,6 @@
 #include "pinOut.h"
 #include <Servo.h>
 #include "ConstumChar.h"
-uint64_t value = 0;
 
 /********************************************//**
  *  Temperature sensor control functions
@@ -25,10 +24,9 @@ LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
 #define DEBUG(a) Serial.print(millis()); Serial.print(": "); Serial.println(a);
 
 /********************************************//**
- *  keypad
+ *  keypad control functions
  ***********************************************/
 #include <Keypad.h>
-/* Keypad setup */
 char keys[KEYPAD_ROWS][KEYPAD_COLS] = {
   {'1', '2', '3', 'A'},
   {'4', '5', '6', 'B'},
@@ -38,20 +36,29 @@ char keys[KEYPAD_ROWS][KEYPAD_COLS] = {
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, KEYPAD_ROWS, KEYPAD_COLS);
 
 /********************************************//**
- *  clave ,mensaje bienvenida, cursor, timeout
+ *  Update cursor control Task control functions
+ ***********************************************/
+void actualizarCursor();
+
+/********************************************//**
+ *  Segurity control Task control functions
  ***********************************************/
 void sistemaClave();
+
+/********************************************//**
+ *  Message welcome control Task control functions
+ ***********************************************/
 void mensajeBienvenida();
-void actualizarCursor();
-void tiempoSalida1();
-void tiempoSalida2();
-void tiempoSalida3();
+
 /********************************************//**
  *  Asynchronous Task control functions
  ***********************************************/
 #include "AsyncTaskLib.h"
 void mostrarTemp();
 void mostrarLuz();
+void tiempoSalida1();
+void tiempoSalida2();
+void tiempoSalida3();
 
 AsyncTask asyncTaskTimeOut2Seg(2000, true, tiempoSalida1);
 AsyncTask asyncTaskTimeOut10Seg(10000, true,  tiempoSalida2);
@@ -90,7 +97,7 @@ enum Input
 /*! Stores last user input */
 Input currentInput;
 
-/*! Create new StateMachine 4 states and 6 transitions */
+/*! Create new StateMachine 5 states and 8 transitions */
 StateMachine stateMachine(5, 8);
 
 /********************************************//**
@@ -108,8 +115,8 @@ void inicializarComponentes();
  *  Define global variables
  ***********************************************/
 int tempValue;
-String inString = "";    // string to hold input
-
+String inString = "";    
+uint64_t value = 0;
 
 void setup() {
   lcd.createChar(0, Alien);
@@ -117,17 +124,8 @@ void setup() {
   lcd.createChar(2, Unblock);
   lcd.createChar(3, Wrong);
   inicilizarComponentes();
-  //asyncTask1.Start();
-  //asyncTask2.Start();
-  //asyncTaskSeguridad.Start();
-  //mensajeBienvenida();
-  //lcd.clear();
   setupStateMachine();  
-   //asyncTaskSeguridad.Start();
-  //Serial.println("Start Machine Started");
   stateMachine.SetState(ingresoSeguridad, false, true);
-  //sistemaClave();
- 
 }
 
 void loop() {
@@ -143,8 +141,20 @@ void loop() {
           i = 0;
         };
   };
-  //asyncTaskSeguridad.Update();
 }
+
+/*F**************************************************************************
+* NAME: inicilizarComponentes
+*----------------------------------------------------------------------------
+* PARAMS:   none
+* return:   none
+*----------------------------------------------------------------------------
+* PURPOSE:
+* initialize components like pines,leds etc.
+*----------------------------------------------------------------------------
+* NOTE:
+* 
+*****************************************************************************/
 
 void inicilizarComponentes(){
   Serial.begin(115200);
@@ -152,7 +162,7 @@ void inicilizarComponentes(){
   pinMode(LED_RED, OUTPUT);
   pinMode(LED_GREEN, OUTPUT);
   pinMode(LED_BLUE, OUTPUT);
-  pinMode(BUZZER, OUTPUT);  // pin 8 como salida
+  pinMode(BUZZER, OUTPUT); 
   digitalWrite(LED_RED, LOW);
   digitalWrite(LED_GREEN, LOW);
   digitalWrite(LED_BLUE, LOW);

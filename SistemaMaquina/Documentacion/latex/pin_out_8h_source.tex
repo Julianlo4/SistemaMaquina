@@ -1,0 +1,28 @@
+\doxysection{pin\+Out.\+h}
+\hypertarget{pin_out_8h_source}{}\label{pin_out_8h_source}\mbox{\hyperlink{pin_out_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00001}\mbox{\hyperlink{pin_out_8h_aca338dbd19d7940923334629f6e5f3b7}{00001}}\ \textcolor{preprocessor}{\#define\ LED\_GREEN\ A7}}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00002}\mbox{\hyperlink{pin_out_8h_a31e20330f8ce94e0dd10b005a15c5898}{00002}}\ \textcolor{preprocessor}{\#define\ LED\_RED\ A5}}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00003}\mbox{\hyperlink{pin_out_8h_ae2e40566d27689f8581d7b0f12271d45}{00003}}\ \textcolor{preprocessor}{\#define\ LED\_BLUE\ A6}}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00004}\mbox{\hyperlink{pin_out_8h_a145103118f6d9d1129aa4509cf214a13}{00004}}\ \textcolor{preprocessor}{\#define\ BUZZER\ A14}}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00005}\mbox{\hyperlink{pin_out_8h_a79111e78831efb8ac76fa8123357475e}{00005}}\ \textcolor{preprocessor}{\#define\ DHT11\_PIN\ A15}}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00008}\mbox{\hyperlink{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}{00008}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}{KEYPAD\_ROWS}}\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00009}\mbox{\hyperlink{pin_out_8h_a11f9025ef955263da5731a506b2d830d}{00009}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{pin_out_8h_a11f9025ef955263da5731a506b2d830d}{KEYPAD\_COLS}}\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00010}\mbox{\hyperlink{pin_out_8h_a537de3b3399ca7c8fdec5862538861ab}{00010}}\ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{pin_out_8h_a537de3b3399ca7c8fdec5862538861ab}{rowPins}}[\mbox{\hyperlink{pin_out_8h_a332148869b2d5d97d18079aa63a2c553}{KEYPAD\_ROWS}}]\ =\ \{5,\ 4,\ 3,\ 2\};}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00011}\mbox{\hyperlink{pin_out_8h_a3c964a40ceee38dff58e11bf85ebcf5e}{00011}}\ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{pin_out_8h_a3c964a40ceee38dff58e11bf85ebcf5e}{colPins}}[\mbox{\hyperlink{pin_out_8h_a11f9025ef955263da5731a506b2d830d}{KEYPAD\_COLS}}]\ =\ \{A3,\ A2,\ A1,\ A4\};}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00013}\mbox{\hyperlink{pin_out_8h_a3b0de9b2bd862a0a6f31ec0ad95fb8eb}{00013}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{pin_out_8h_a3b0de9b2bd862a0a6f31ec0ad95fb8eb}{activarBloqueo}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00014}\mbox{\hyperlink{pin_out_8h_afa84c2e2bc44a599431faefb07d2f607}{00014}}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{pin_out_8h_afa84c2e2bc44a599431faefb07d2f607}{password}}[6];}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00015}\mbox{\hyperlink{pin_out_8h_a71efda6978641548f428da4563415ed4}{00015}}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{pin_out_8h_a71efda6978641548f428da4563415ed4}{passwordCorrecta}}[]\ =\ \textcolor{stringliteral}{"{}12345"{}};}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00016}\mbox{\hyperlink{pin_out_8h_a01494b8fd5801ba9e205324f4b1545ea}{00016}}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{pin_out_8h_a01494b8fd5801ba9e205324f4b1545ea}{i}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00017}\mbox{\hyperlink{pin_out_8h_a94f5b83df4e7e681da46bfa503ac6b1a}{00017}}\ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{pin_out_8h_a94f5b83df4e7e681da46bfa503ac6b1a}{intentos}}\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00019}\mbox{\hyperlink{pin_out_8h_a8450960731db3add8cee227018677825}{00019}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{pin_out_8h_a8450960731db3add8cee227018677825}{photocellPin}}\ =\ A10;}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00020}\mbox{\hyperlink{pin_out_8h_a2cd9f0d96c9cd0637798de3baa7aee60}{00020}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{pin_out_8h_a2cd9f0d96c9cd0637798de3baa7aee60}{ledPin}}\ =\ 13;}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00021}\mbox{\hyperlink{pin_out_8h_add4bad84eee39420fd1322a814152c31}{00021}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{pin_out_8h_add4bad84eee39420fd1322a814152c31}{temperaturaNormal}}\ =\ 30;}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00022}\mbox{\hyperlink{pin_out_8h_a281867d3077f2d160c0c599a14380805}{00022}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{pin_out_8h_a281867d3077f2d160c0c599a14380805}{temperaturaAlta}}\ =\ 32;}
+\DoxyCodeLine{\Hypertarget{pin_out_8h_source_l00023}\mbox{\hyperlink{pin_out_8h_af9c12e858fceb17d5881edc91bf6abf2}{00023}}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{pin_out_8h_af9c12e858fceb17d5881edc91bf6abf2}{tiempo}}\ =\ 0;}
+
+\end{DoxyCode}
