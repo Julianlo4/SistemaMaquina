@@ -30,7 +30,7 @@ void setupStateMachine()
   // Add actions
   stateMachine.SetOnEntering(ingresoSeguridad, mensajeBienvenida);
   stateMachine.SetOnEntering(eventoPuertaVentana, mensajeEvento);
-  stateMachine.SetOnEntering(monitorAmbiental, mensajeMonitor);
+  stateMachine.SetOnEntering(monitorAmbiental, medirTemperaturaHumedadLuz);
   stateMachine.SetOnEntering(alarmaAmbiental, mensajeAlarma);
   stateMachine.SetOnEntering(alertaSeguridad, mensajeAlerta);
 
@@ -120,7 +120,7 @@ void sistemaClave(){
               lcd.print("Clave Incorrecta"); 
               lcd.setCursor(7, 1);
               lcd.write(byte(3));
-              delay(1000);
+              delay(3000);
               lcd.clear();
               lcd.print("Ingrese clave");
               lcd.setCursor(0, 1);
@@ -158,15 +158,16 @@ void sistemaClave(){
 * NOTE:
 * 
 *****************************************************************************/
-void medirTemperaturaHumedadLuz(){
+void medirTemperaturaHumedadLuz(){ 
     lcd.clear();
+    mensajeMonitor();
     asyncTask1.Start();
     asyncTask2.Start();
-  if(tempValue > temperaturaAlta){
-      currentInput = Input::senialCuatro;
-      updateInputStateMachine();   
-  }
-  asyncTaskTimeOut10Seg.Start();
+    if(tempValue > temperaturaAlta){
+        currentInput = Input::senialCuatro;
+        updateInputStateMachine();   
+    }
+    asyncTaskTimeOut10Seg.Start();
 }
 
 /*F**************************************************************************
@@ -209,6 +210,7 @@ void activarAlarmaAmbiental(){
 *****************************************************************************/
 
 void ventasPuertas(){
+  lcd.clear();
   asyncTaskTimeOut2Seg.Start();
   Serial.println("Eventos ventanas ");
   lcd.print("VentanaPuerta");
@@ -231,8 +233,10 @@ void updateInputStateMachine()
   switch (currentState)
   {
     case ingresoSeguridad: asyncTaskSeguridad.Start(); // sistemaClave();  break;
-    case eventoPuertaVentana: ventasPuertas();    break;
-    case monitorAmbiental:    medirTemperaturaHumedadLuz(); break;
+    case eventoPuertaVentana:  lcd.clear(); 
+          ventasPuertas();    break;
+    case monitorAmbiental:  lcd.clear();
+          medirTemperaturaHumedadLuz(); break;
     case alarmaAmbiental: mensajeAlerta(); break;
     case alertaSeguridad : activarAlarmaAmbiental(); break;
     default: Serial.println("state Unknown"); break;
@@ -268,6 +272,7 @@ void mensajeBienvenida() {
     lcd.print(message[i]);
     delay(50);
   }
+  sistemaClave();
 }
 
 
@@ -304,11 +309,13 @@ void salidaSeguridad()
 void mensajeEvento()
 {
   lcd.clear();
-  lcd.print("VentanaPuerta");
+  asyncTask1.Stop();
+  asyncTask2.Stop();
   Serial.println("VentanaPuerta");
   Serial.println("1   2   3   4   5");
   Serial.println("    X        ");
   Serial.println();
+  updateInputStateMachine();
 }
 
 /*F**************************************************************************
@@ -342,6 +349,7 @@ void salidaEvento()
 *****************************************************************************/
 void mensajeMonitor()
 {
+  lcd.clear();
   Serial.println("MonitorAmbiental");
   Serial.println("1   2   3   4   5");
   Serial.println("        X    ");

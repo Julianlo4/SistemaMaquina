@@ -137,14 +137,17 @@ void loop() {
             password[i++] = key;
             lcd.print('*');
           };
-
+        if(i == 5){
+          sistemaClave();
+          i = 0;
+        }
+  };
         asyncTaskTimeOut2Seg.Update();
         asyncTaskTimeOut6Seg.Update();
         asyncTaskTimeOut10Seg.Update();
         asyncTask1.Update();
         asyncTask2.Update();
         stateMachine.Update();
-  };
 }
 
 /*F**************************************************************************
@@ -208,6 +211,7 @@ void actualizarCursor() {
 void tiempoSalida1(){
   Serial.print("tiempo 1");
   DEBUG("T1_END");
+   lcd.clear();
   currentInput = Input::senialDos;
   updateInputStateMachine();
 }
@@ -227,6 +231,7 @@ void tiempoSalida1(){
 void tiempoSalida2(){
   DEBUG("T2_END");
   currentInput = Input::senialUno;
+   lcd.clear();
   updateInputStateMachine();
 }
 /*F**************************************************************************
@@ -366,9 +371,9 @@ void mostrarTemp(){
   int outputValue = 0;
    Serial.println("nivel de luz");
   outputValue = analogRead(photocellPin);
-  lcd.setCursor(5, 0);
+  lcd.setCursor(6, 0);
   lcd.print("L");
-  lcd.setCursor(7, 0);
+  lcd.setCursor(8, 0);
   lcd.print(outputValue);//print the temperature on lcd1602
   Serial.println(outputValue);
   lcd.setCursor(11, 0);
