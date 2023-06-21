@@ -17,15 +17,15 @@ void setupStateMachine()
   stateMachine.AddTransition(ingresoSeguridad, eventoPuertaVentana, []() { return currentInput == senialUno; });
   
   stateMachine.AddTransition(eventoPuertaVentana, monitorAmbiental, []() { return currentInput == senialDos; });
-  stateMachine.AddTransition(eventoPuertaVentana, alertaSeguridad, []() { return currentInput == senialTres; });
+  stateMachine.AddTransition(eventoPuertaVentana, alertaSeguridad, []() { return currentInput == senialCuatro; });
 
   stateMachine.AddTransition(monitorAmbiental, eventoPuertaVentana, []() { return currentInput == senialUno; });
-  stateMachine.AddTransition(monitorAmbiental,alarmaAmbiental, []() { return currentInput == senialCuatro; });
+  stateMachine.AddTransition(monitorAmbiental,alarmaAmbiental, []() { return currentInput ==  senialTres; });
 
   stateMachine.AddTransition(alarmaAmbiental, monitorAmbiental, []() { return currentInput == senialDos; });
-  stateMachine.AddTransition(alarmaAmbiental, alertaSeguridad, []() { return currentInput == senialTres; });
+  stateMachine.AddTransition(alarmaAmbiental, alertaSeguridad, []() { return currentInput == senialCuatro; });
   
-  stateMachine.AddTransition(alertaSeguridad, eventoPuertaVentana, []() { return currentInput == senialDos; });
+  stateMachine.AddTransition(alertaSeguridad, eventoPuertaVentana, []() { return currentInput == senialUno; });
 
   // Add actions
   stateMachine.SetOnEntering(ingresoSeguridad, mensajeBienvenida);
@@ -163,11 +163,13 @@ void medirTemperaturaHumedadLuz(){
     mensajeMonitor();
     asyncTask1.Start();
     asyncTask2.Start();
-    if(tempValue > temperaturaAlta){
-        currentInput = Input::senialCuatro;
+    if(tempValue >=28 ){
+        currentInput = Input::senialTres;
         updateInputStateMachine();   
+    } else if( tempValue < 28) {
+        asyncTaskTimeOut10Seg.Start();
     }
-    asyncTaskTimeOut10Seg.Start();
+    
 }
 
 /*F**************************************************************************
@@ -183,17 +185,20 @@ void medirTemperaturaHumedadLuz(){
 * 
 *****************************************************************************/
 void activarAlarmaAmbiental(){
+  lcd.clear();
+  lcd.print("Alarmiiii");
+  Serial.print("alarmiii");
   sonidoBloqueado();
   tiempo = 0;
   tiempo = millis();
-    if(tempValue < temperaturaNormal){
+  if ( (tempValue >= 28) &&  (tiempo > 5000)){
+    tiempo = 0;
+    currentInput = Input::senialCuatro;
+    updateInputStateMachine();
+  } else {
     currentInput = Input::senialDos;
     updateInputStateMachine();
-  } else if ( (tempValue > temperaturaAlta) &&  (tiempo > 5000)){
-    tiempo = 0;
-    currentInput = Input::senialTres;
-    updateInputStateMachine();
-  }
+  } 
 }
 
 /*F**************************************************************************
@@ -237,8 +242,8 @@ void updateInputStateMachine()
           ventasPuertas();    break;
     case monitorAmbiental:  lcd.clear();
           medirTemperaturaHumedadLuz(); break;
-    case alarmaAmbiental: mensajeAlerta(); break;
-    case alertaSeguridad : activarAlarmaAmbiental(); break;
+    case alarmaAmbiental: activarAlarmaAmbiental(); break;
+    case alertaSeguridad: mensajeAlerta();  break;
     default: Serial.println("state Unknown"); break;
   }
 }
@@ -431,7 +436,11 @@ void salidaAlarma()
 void mensajeAlerta()
 {
   lcd.clear();
+  asyncTask1.Stop();
+  asyncTask2.Stop();
   asyncTaskTimeOut6Seg.Start();
+
+  lcd.print("alerta");
   Serial.println("Alerta Seguridad");
   Serial.println("1   2   3   4   5");
   Serial.println("                X");

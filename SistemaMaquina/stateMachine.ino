@@ -28,15 +28,15 @@ void setupStateMachine()
   stateMachine.AddTransition(alertaSeguridad, eventoPuertaVentana, []() { return currentInput == senialDos; });
 
   // Add actions
-  stateMachine.SetOnEntering(ingresoSeguridad, mensajeBienvenida);
+  stateMachine.SetOnEntering(ingresoSeguridad, sistemaClave);
   stateMachine.SetOnEntering(eventoPuertaVentana, mensajeEvento);
   stateMachine.SetOnEntering(monitorAmbiental, mensajeMonitor);
   stateMachine.SetOnEntering(alarmaAmbiental, mensajeAlarma);
   stateMachine.SetOnEntering(alertaSeguridad, mensajeAlerta);
 
-  stateMachine.SetOnLeaving(ingresoSeguridad, salidaSeguridad);
+ stateMachine.SetOnLeaving(ingresoSeguridad, salidaSeguridad);
   stateMachine.SetOnLeaving(eventoPuertaVentana, salidaEvento);
-  stateMachine.SetOnEntering(monitorAmbiental, salidaMonitor);
+  stateMachine.SetOnLeaving(monitorAmbiental, salidaMonitor);
   stateMachine.SetOnLeaving(alarmaAmbiental, salidaAlarma);
   stateMachine.SetOnLeaving(alertaSeguridad, salidaAlerta);
 }
@@ -110,7 +110,7 @@ void sistemaClave(){
             sonidoEntrar();
             lcd.clear();
             currentInput = Input::senialUno;
-            updateInputStateMachine();
+          // updateInputStateMachine();
          }  else {
               lcd.clear();
               digitalWrite(LED_GREEN, LOW);
@@ -157,14 +157,16 @@ void sistemaClave(){
 * 
 *****************************************************************************/
 void medirTemperaturaHumedadLuz(){
+  lcd.clear();
     asyncTask1.Start();
     asyncTask2.Start();
   if(tempValue > temperaturaAlta){
       currentInput = Input::senialCuatro;
-      updateInputStateMachine();
+      //updateInputStateMachine();
   }
   else{
     currentInput = Input::Unknown;
+     //updateInputStateMachine();
   }
   asyncTaskTimeOut10Seg.Start();
 }
@@ -187,11 +189,11 @@ void activarAlarmaAmbiental(){
   tiempo = millis();
     if(tempValue < temperaturaNormal){
     currentInput = Input::senialDos;
-    updateInputStateMachine();
+    //updateInputStateMachine();
   } else if ( (tempValue > temperaturaAlta) &&  (tiempo > 5000)){
     tiempo = 0;
     currentInput = Input::senialTres;
-    updateInputStateMachine();
+   // updateInputStateMachine();
   }
 }
 
@@ -212,6 +214,9 @@ void ventasPuertas(){
   Serial.println("Eventos ventanas ");
   lcd.print("VentanaPuerta");
   asyncTaskTimeOut2Seg.Start();
+  
+  currentInput = Input::senialDos;
+  //updateInputStateMachine();
 }
 /*F**************************************************************************
 * NAME: updateInputStateMachine
@@ -230,13 +235,16 @@ void updateInputStateMachine()
   int currentState = stateMachine.GetState();
   switch (currentState)
   {
-    case senialUno:   ventasPuertas();  
+    case ingresoSeguridad: sistemaClave(); 
+    asyncTaskSeguridad.Start(); break;
+    case eventoPuertaVentana: ventasPuertas();  //currentInput = Input::senialUno;    
                     break;
-    case senialDos:  medirTemperaturaHumedadLuz(); 
+    case monitorAmbiental:    medirTemperaturaHumedadLuz(); //currentInput = Input::senialDos; // 
                     break;
-    case senialTres:  mensajeAlerta(); 
+    case alarmaAmbiental: mensajeAlerta(); //currentInput = Input::senialTres; //
                     break;
-    case senialCuatro:  activarAlarmaAmbiental();
+
+    case alertaSeguridad : activarAlarmaAmbiental(); //currentInput = Input::senialCuatro; //
                     break;
     default:        Serial.println("state Unknown"); 
                     break;
@@ -256,12 +264,14 @@ void updateInputStateMachine()
 * 
 *****************************************************************************/
 void mensajeBienvenida() {
-  currentInput = Input::Unknown;
+    Serial.println("A   B   C   D");
+  Serial.println("X           ");
+  Serial.println();
   actualizarCursor();
- // DEBUG("Bienvenido");
+  DEBUG("Bienvenido");
   lcd.setCursor(1, 0);
   lcd.print("Bienvenido");
-  lcd.setCursor(11, 0);
+  lcd.setCursor(10, 0);
   lcd.write(byte(0));
   Serial.println("Bienvenido");
   lcd.setCursor(2, 0);
@@ -271,8 +281,8 @@ void mensajeBienvenida() {
     lcd.print(message[i]);
     delay(50);
   }
-  delay(500);
-  sistemaClave();
+  //sistemaClave();
+ 
 }
 
 
@@ -308,8 +318,11 @@ void salidaSeguridad()
 *****************************************************************************/
 void mensajeEvento()
 {
-  currentInput = Input::Unknown;
-  DEBUG("State_NORMAL_B");
+  //currentInput = Input::Unknown;
+    DEBUG("State_NORMAL_B");
+  Serial.println("A   B   C   D");
+  Serial.println("    X        ");
+  Serial.println();
   //lcd.clear();
   //lcd.setCursor(0, 0);
   lcd.print("VentanaPuerta");
@@ -348,13 +361,12 @@ void salidaEvento()
 *****************************************************************************/
 void mensajeMonitor()
 {
-  currentInput = Input::Unknown;
-  DEBUG("State_NORMAL_B");
-  lcd.clear();
-  lcd.print("MonitorAmb");
+  //currentInput = Input::Unknown;
+  DEBUG("State_NORMAL_C");
+  Serial.println("A   B   C   D");
+  Serial.println("        X    ");
+  Serial.println();
   Serial.println("MonitorAmb");
-  lcd.setCursor(3, 1);
-  lcd.setCursor(0, 0);
 }
 /*F**************************************************************************
 * NAME: salidaMonitor
@@ -389,8 +401,12 @@ void salidaMonitor()
 *****************************************************************************/
 void mensajeAlarma()
 {
-  currentInput = Input::Unknown;
-  DEBUG("State_NORMAL_B");
+  //currentInput = Input::Unknown;
+   DEBUG("State_NORMAL_D");
+  Serial.println("A   B   C   D");
+  Serial.println("            X");
+  Serial.println();
+  Serial.println("MonitorAmb");
   lcd.clear();
   lcd.print("Alarma ambi");
   Serial.println("Alarma ambiental");
@@ -431,13 +447,13 @@ void salidaAlarma()
 *****************************************************************************/
 void mensajeAlerta()
 {
-  currentInput = Input::Unknown;
+  //currentInput = Input::Unknown;
   DEBUG("State_NORMAL_B");
   lcd.clear();
-  lcd.print("Alerta Seguridad");
+    Serial.println("A   B   C   D  S");
+    Serial.println("               X");
+  Serial.println();
   Serial.println("Alerta Seguridad");
-  lcd.setCursor(3, 1);
-  lcd.setCursor(0, 0);
   asyncTaskTimeOut6Seg.Start();
 }
 

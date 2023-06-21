@@ -324,6 +324,7 @@ for (int i = 0; i < 5; i++) {			// bucle repite 25 veces
 * 
 *****************************************************************************/
 void mostrarTemp(){
+  lcd.clear();
   Serial.println("nivel de humedad - temperatura");
   Serial.print("DHT11, \t");
   int chk = DHT.read11(DHT11_PIN);

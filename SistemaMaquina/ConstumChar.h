@@ -18,7 +18,7 @@ byte Unblock [8] = {
   B11111,
   B00000
 };
-byte Alien[8] = {
+byte Alien [8] = {
   B11111,
   B10101,
   B11111,

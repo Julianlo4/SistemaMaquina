@@ -60,12 +60,12 @@ void tiempoSalida1();
 void tiempoSalida2();
 void tiempoSalida3();
 
-AsyncTask asyncTaskTimeOut2Seg(2000, true, tiempoSalida1);
-AsyncTask asyncTaskTimeOut10Seg(10000, true,  tiempoSalida2);
+AsyncTask asyncTaskTimeOut2Seg(2000, false, tiempoSalida1);
+AsyncTask asyncTaskTimeOut10Seg(10000, false,  tiempoSalida2);
 AsyncTask asyncTaskTimeOut6Seg(6000, true,  tiempoSalida3);
 AsyncTask asyncTask1(2000, true,  mostrarTemp );
 AsyncTask asyncTask2(1000, true, mostrarLuz );
-AsyncTask asyncTaskSeguridad(500, true, sistemaClave);
+AsyncTask asyncTaskSeguridad(500, false, sistemaClave);
 /********************************************//**
  *  State Machine control functions
  ***********************************************/
@@ -125,12 +125,14 @@ void setup() {
   lcd.createChar(3, Wrong);
   inicilizarComponentes();
   setupStateMachine();  
-  stateMachine.SetState(ingresoSeguridad, false, true);
+  stateMachine.SetState(State::ingresoSeguridad, false, true);
+  
 }
 
 void loop() {
   actualizarCursor();
   if(!activarBloqueo){
+    
     char key = keypad.getKey();
        if (key) {
             password[i++] = key;
@@ -141,6 +143,13 @@ void loop() {
           i = 0;
         };
   };
+  updateInputStateMachine();
+  stateMachine.Update();
+  asyncTaskTimeOut2Seg.Update();
+  
+  asyncTaskTimeOut6Seg.Update();
+  asyncTaskTimeOut10Seg.Update();
+  asyncTaskSeguridad.Update();
 }
 
 /*F**************************************************************************
@@ -202,9 +211,9 @@ void actualizarCursor() {
 * 
 *****************************************************************************/
 void tiempoSalida1(){
+  Serial.print("tiempo 1");
   DEBUG("T1_END");
-  currentInput = Input::senialDos;
-  updateInputStateMachine();
+
 }
 /*F**************************************************************************
 * NAME: tiempoSalida2
@@ -221,8 +230,6 @@ void tiempoSalida1(){
 
 void tiempoSalida2(){
   DEBUG("T2_END");
-  currentInput = Input::senialUno;
-  updateInputStateMachine();
 }
 /*F**************************************************************************
 * NAME: tiempoSalida3
@@ -239,8 +246,6 @@ void tiempoSalida2(){
 
 void tiempoSalida3(){
   DEBUG("T3_END");
-  currentInput = Input::senialUno;
-  updateInputStateMachine();
 }
 /*F**************************************************************************
 * NAME: sonidoEntrar
