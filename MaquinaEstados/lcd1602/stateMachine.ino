@@ -77,7 +77,7 @@ void readData(){
   }
 
   if (flagData){
-    updateInputStateMachine();
+    //updateInputStateMachine();
   }
 
 }
@@ -110,7 +110,7 @@ void sistemaClave(){
             sonidoEntrar();
             lcd.clear();
             currentInput = Input::senialUno;
-            updateInputStateMachine();
+            updateInputStateMachine(currentInput);
          }  else {
               lcd.clear();
               digitalWrite(LED_GREEN, LOW);
@@ -163,10 +163,11 @@ void medirTemperaturaHumedadLuz(){
     mensajeMonitor();
     asyncTask1.Start();
     asyncTask2.Start();
-    if(tempValue >=28 ){
+    if(tempValue >=25 ){
+        asyncTaskTimeOut10Seg.Stop();
         currentInput = Input::senialTres;
-        updateInputStateMachine();   
-    } else if( tempValue < 28) {
+        updateInputStateMachine(currentInput);   
+    } else if( tempValue < 25) {
         asyncTaskTimeOut10Seg.Start();
     }
     
@@ -185,19 +186,21 @@ void medirTemperaturaHumedadLuz(){
 * 
 *****************************************************************************/
 void activarAlarmaAmbiental(){
+  asyncTaskTimeOut2Seg.Stop();
+  asyncTaskTimeOut10Seg.Stop();
+  mensajeAlarma();
   lcd.clear();
-  lcd.print("Alarmiiii");
-  Serial.print("alarmiii");
+  lcd.print("Alarma");
+  Serial.println("alarma");
   sonidoBloqueado();
-  tiempo = 0;
-  tiempo = millis();
-  if ( (tempValue >= 28) &&  (tiempo > 5000)){
-    tiempo = 0;
+  tiempoActual = millis();
+  if ( (tempValue >= 25) && tiempoActual >= 5000){
     currentInput = Input::senialCuatro;
-    updateInputStateMachine();
-  } else {
+    updateInputStateMachine(currentInput);
+    segundos = 0;
+  } else if (tempValue < 24){
     currentInput = Input::senialDos;
-    updateInputStateMachine();
+    updateInputStateMachine(currentInput);
   } 
 }
 
@@ -232,16 +235,13 @@ void ventasPuertas(){
 * NOTE:
 * 
 *****************************************************************************/
-void updateInputStateMachine()
+void updateInputStateMachine(int current)
 {
-  int currentState = stateMachine.GetState();
-  switch (currentState)
+  switch (current)
   {
     case ingresoSeguridad: asyncTaskSeguridad.Start(); // sistemaClave();  break;
-    case eventoPuertaVentana:  lcd.clear(); 
-          ventasPuertas();    break;
-    case monitorAmbiental:  lcd.clear();
-          medirTemperaturaHumedadLuz(); break;
+    case eventoPuertaVentana:  ventasPuertas();    break;
+    case monitorAmbiental:  medirTemperaturaHumedadLuz(); break;
     case alarmaAmbiental: activarAlarmaAmbiental(); break;
     case alertaSeguridad: mensajeAlerta();  break;
     default: Serial.println("state Unknown"); break;
@@ -296,7 +296,7 @@ void mensajeBienvenida() {
 void salidaSeguridad()
 {
   DEBUG("Dejando sistema de seguridad");
-  Serial.println("Pasando de seguridad a eventos");
+
 }
 
 /*F**************************************************************************
@@ -320,7 +320,6 @@ void mensajeEvento()
   Serial.println("1   2   3   4   5");
   Serial.println("    X        ");
   Serial.println();
-  updateInputStateMachine();
 }
 
 /*F**************************************************************************
@@ -338,7 +337,6 @@ void mensajeEvento()
 void salidaEvento()
 {
   DEBUG("Dejando eventos");
-  Serial.println("Pasando de eventos a monitor ambiental");
 }
 /*F**************************************************************************
 * NAME: mensajeMonitor
@@ -375,7 +373,6 @@ void mensajeMonitor()
 void salidaMonitor()
 {
    DEBUG("Dejando monitor ambiental");
-  Serial.println("Pasando de monitor ambiental a alarma ambiental");
 }
 
 
@@ -418,7 +415,6 @@ void mensajeAlarma()
 void salidaAlarma()
 {
   DEBUG("Dejando alarma ambiental");
-  Serial.println("Pasando de alarma ambiental a alerta seguridad");
 }
 
 /*F**************************************************************************
@@ -463,5 +459,4 @@ void mensajeAlerta()
 void salidaAlerta()
 {
   DEBUG("Dejando alerta seguridad");
-  Serial.println("Pasando de alerta seguridad a eventos");
 }

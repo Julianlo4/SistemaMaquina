@@ -20,4 +20,4 @@ const int photocellPin = A10;
 const int ledPin = 13;
 const byte temperaturaNormal = 30;
 const byte temperaturaAlta = 32;
-unsigned int tiempo = 0;
+unsigned long tiempoActual = 0;

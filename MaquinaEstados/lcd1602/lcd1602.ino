@@ -142,12 +142,12 @@ void loop() {
           i = 0;
         }
   };
-        asyncTaskTimeOut2Seg.Update();
-        asyncTaskTimeOut6Seg.Update();
-        asyncTaskTimeOut10Seg.Update();
-        asyncTask1.Update();
-        asyncTask2.Update();
-        stateMachine.Update();
+  asyncTaskTimeOut2Seg.Update();
+  asyncTaskTimeOut6Seg.Update();
+  asyncTaskTimeOut10Seg.Update();
+  asyncTask1.Update();
+  asyncTask2.Update();
+  stateMachine.Update();
 }
 
 /*F**************************************************************************
@@ -213,7 +213,7 @@ void tiempoSalida1(){
   DEBUG("T1_END");
    lcd.clear();
   currentInput = Input::senialDos;
-  updateInputStateMachine();
+  updateInputStateMachine(currentInput);
 }
 /*F**************************************************************************
 * NAME: tiempoSalida2
@@ -232,7 +232,7 @@ void tiempoSalida2(){
   DEBUG("T2_END");
   currentInput = Input::senialUno;
    lcd.clear();
-  updateInputStateMachine();
+  updateInputStateMachine(currentInput);
 }
 /*F**************************************************************************
 * NAME: tiempoSalida3
@@ -250,8 +250,13 @@ void tiempoSalida2(){
 void tiempoSalida3(){
   DEBUG("T3_END");
   currentInput = Input::senialUno;
-  updateInputStateMachine();
+  updateInputStateMachine(currentInput);
 }
+
+
+
+
+
 /*F**************************************************************************
 * NAME: sonidoEntrar
 *----------------------------------------------------------------------------
