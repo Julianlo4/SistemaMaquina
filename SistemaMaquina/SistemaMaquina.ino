@@ -152,19 +152,11 @@ void loop() {
   asyncTaskSeguridad.Update();
 }
 
-/*F**************************************************************************
-* NAME: inicilizarComponentes
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* initialize components like pines,leds etc.
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
-
+/**
+  * @brief initialize components like pines,leds etc
+  * @param none
+  * @return none
+*/
 void inicilizarComponentes(){
   Serial.begin(115200);
   lcd.begin(16, 2);
@@ -178,19 +170,11 @@ void inicilizarComponentes(){
   lcd.cursor();
  
 }
-
-/*F**************************************************************************
-* NAME: actualizarCursor
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Toggles the cursor on an LCD display based on a time-based condition
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Toggles the cursor on an LCD display based on a time-based condition
+  * @param none
+  * @return none
+*/
 void actualizarCursor() {
   if (millis() / 250 % 2 == 0 ) {
     lcd.cursor();
@@ -198,67 +182,37 @@ void actualizarCursor() {
     lcd.noCursor();
   }
 }
-/*F**************************************************************************
-* NAME: tiempoSalida1
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the completion of Time T1
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Handles the completion of Time T1
+  * @param none
+  * @return none
+*/
 void tiempoSalida1(){
   Serial.print("tiempo 1");
   DEBUG("T1_END");
 
 }
-/*F**************************************************************************
-* NAME: tiempoSalida2
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the completion of Time T2
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
-
+/**
+  * @brief Handles the completion of Time T2
+  * @param none
+  * @return none
+*/
 void tiempoSalida2(){
   DEBUG("T2_END");
 }
-/*F**************************************************************************
-* NAME: tiempoSalida3
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the completion of Time T3
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
-
+/**
+  * @brief Handles the completion of Time T3
+  * @param none
+  * @return none
+*/
 void tiempoSalida3(){
   DEBUG("T3_END");
 }
-/*F**************************************************************************
-* NAME: sonidoEntrar
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Plays a sequence of tones on a buzzer to create a sound effect
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Plays a sequence of tones on a buzzer to create a sound effect
+  * @param none
+  * @return none
+*/
 void sonidoEntrar(){
 for (int i = 0; i < 25; i++) {			// bucle repite 25 veces
       int duracion = 1000 / duraciones[i];		// duracion de la nota en milisegundos
@@ -268,35 +222,21 @@ for (int i = 0; i < 25; i++) {			// bucle repite 25 veces
       noTone(BUZZER);	
 }
 }
-/*F**************************************************************************
-* NAME: sonidoErrado
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Plays an error sound on a buzzer
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Plays an error sound on a buzzer
+  * @param none
+  * @return none
+*/
 void sonidoErrado(){
       tone(BUZZER, 1000, 100);
       delay(100);
       noTone(BUZZER);	
 }
-/*F**************************************************************************
-* NAME: sonidoBloqueado
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Plays a sequence of tones on a buzzer to create a "blocked" sound effect
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Plays a sequence of tones on a buzzer to create a "blocked" sound effect
+  * @param none
+  * @return none
+*/
 void sonidoBloqueado(){
 for (int i = 0; i < 5; i++) {			// bucle repite 25 veces
       int duracion = 1000 / duraciones[i];		// duracion de la nota en milisegundos
@@ -306,18 +246,11 @@ for (int i = 0; i < 5; i++) {			// bucle repite 25 veces
       noTone(BUZZER);	
 }
 }
-/*F**************************************************************************
-* NAME: mostrarTemp
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Reads humidity and temperature data from a DHT11 sensor and displays it on both the Serial monitor and an LCD display
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Reads humidity and temperature data from a DHT11 sensor and displays it on both the Serial monitor and an LCD display
+  * @param none
+  * @return none
+*/
 void mostrarTemp(){
   Serial.println("nivel de humedad - temperatura");
   Serial.print("DHT11, \t");
@@ -350,18 +283,11 @@ void mostrarTemp(){
   Serial.println(tempValue, 1);
   lcd.print(tempValue, 1);
 }
-/*F**************************************************************************
-* NAME: mostrarLuz
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Reads the light level from a photocell and displays it on both the Serial monitor and an LCD display
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Reads the light level from a photocell and displays it on both the Serial monitor and an LCD display
+  * @param none
+  * @return none
+*/
   void mostrarLuz(void){
   int outputValue = 0;
    Serial.println("nivel de luz");
