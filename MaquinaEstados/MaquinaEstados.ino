@@ -59,13 +59,15 @@ void mostrarLuz();
 void tiempoSalida1();
 void tiempoSalida2();
 void tiempoSalida3();
+void contarTiempo();
 
-AsyncTask asyncTaskTimeOut2Seg(2000, false, tiempoSalida1);
-AsyncTask asyncTaskTimeOut10Seg(10000, false,  tiempoSalida2);
-AsyncTask asyncTaskTimeOut6Seg(6000, true,  tiempoSalida3);
+AsyncTask asyncTaskTimeOut2Seg(2000, tiempoSalida1);
+AsyncTask asyncTaskTimeOut10Seg(10000,tiempoSalida2);
+AsyncTask asyncTaskTimeOut6Seg(6000, tiempoSalida3);
+AsyncTask asyncTaskContarSegundos(1000, true, contarTiempo );
 AsyncTask asyncTask1(2000, true,  mostrarTemp );
 AsyncTask asyncTask2(1000, true, mostrarLuz );
-AsyncTask asyncTaskSeguridad(500, false, sistemaClave);
+AsyncTask asyncTaskSeguridad(500,sistemaClave);
 /********************************************//**
  *  State Machine control functions
  ***********************************************/
@@ -87,11 +89,12 @@ enum State
  */
 enum Input
 {
-  senialUno = 0,
-  senialDos = 1,
-  senialTres = 2,
-  senialCuatro = 3,
-  Unknown = 4,
+  senialZero = 0,
+  senialUno = 1,
+  senialDos = 2,
+  senialTres = 3,
+  senialCuatro = 4,
+  Unknown = 5,
 };
 
 /*! Stores last user input */
@@ -118,6 +121,9 @@ int tempValue;
 String inString = "";    
 uint64_t value = 0;
 
+int SensorState=0;
+int analogVal = 0;
+
 void setup() {
   lcd.createChar(0, Alien);
   lcd.createChar(1, Block);
@@ -126,30 +132,28 @@ void setup() {
   inicilizarComponentes();
   setupStateMachine();  
   stateMachine.SetState(State::ingresoSeguridad, false, true);
-  
 }
 
 void loop() {
   actualizarCursor();
   if(!activarBloqueo){
-    
     char key = keypad.getKey();
        if (key) {
             password[i++] = key;
             lcd.print('*');
           };
-       if(i == 5){
+        if(i == 5){
           sistemaClave();
           i = 0;
-        };
+        }
   };
-  updateInputStateMachine();
-  stateMachine.Update();
   asyncTaskTimeOut2Seg.Update();
-  
   asyncTaskTimeOut6Seg.Update();
   asyncTaskTimeOut10Seg.Update();
-  asyncTaskSeguridad.Update();
+  asyncTask1.Update();
+  asyncTask2.Update();
+  asyncTaskContarSegundos.Update();
+  stateMachine.Update();
 }
 
 /*F**************************************************************************
@@ -168,6 +172,11 @@ void loop() {
 void inicilizarComponentes(){
   Serial.begin(115200);
   lcd.begin(16, 2);
+  pinMode(D0Pin, INPUT);
+  pinMode(tracingPin, INPUT);
+  pinMode(SensorPin,INPUT);
+
+  pinMode(ledPin, OUTPUT);
   pinMode(LED_RED, OUTPUT);
   pinMode(LED_GREEN, OUTPUT);
   pinMode(LED_BLUE, OUTPUT);
@@ -213,7 +222,9 @@ void actualizarCursor() {
 void tiempoSalida1(){
   Serial.print("tiempo 1");
   DEBUG("T1_END");
-
+   lcd.clear();
+  currentInput = Input::senialDos;
+  updateInputStateMachine(currentInput);
 }
 /*F**************************************************************************
 * NAME: tiempoSalida2
@@ -230,6 +241,9 @@ void tiempoSalida1(){
 
 void tiempoSalida2(){
   DEBUG("T2_END");
+  currentInput = Input::senialUno;
+   lcd.clear();
+  updateInputStateMachine(currentInput);
 }
 /*F**************************************************************************
 * NAME: tiempoSalida3
@@ -246,7 +260,27 @@ void tiempoSalida2(){
 
 void tiempoSalida3(){
   DEBUG("T3_END");
+  currentInput = Input::senialUno;
+  updateInputStateMachine(currentInput);
 }
+
+void contarTiempo(){
+  segundos++;
+  DEBUG("Segundos");
+  Serial.println(segundos);
+    if ( (tempValue >= 24) && segundos >= 5){
+    currentInput = Input::senialCuatro;
+    updateInputStateMachine(currentInput);
+    segundos = 0;
+  } else if (tempValue < 23){
+    currentInput = Input::senialDos;
+    updateInputStateMachine(currentInput);
+  } 
+}
+
+
+
+
 /*F**************************************************************************
 * NAME: sonidoEntrar
 *----------------------------------------------------------------------------
@@ -319,6 +353,7 @@ for (int i = 0; i < 5; i++) {			// bucle repite 25 veces
 * 
 *****************************************************************************/
 void mostrarTemp(){
+  lcd.clear();
   Serial.println("nivel de humedad - temperatura");
   Serial.print("DHT11, \t");
   int chk = DHT.read11(DHT11_PIN);
@@ -366,12 +401,58 @@ void mostrarTemp(){
   int outputValue = 0;
    Serial.println("nivel de luz");
   outputValue = analogRead(photocellPin);
-  lcd.setCursor(5, 0);
+  lcd.setCursor(6, 0);
   lcd.print("L");
-  lcd.setCursor(7, 0);
+  lcd.setCursor(8, 0);
   lcd.print(outputValue);//print the temperature on lcd1602
   Serial.println(outputValue);
   lcd.setCursor(11, 0);
   lcd.print("");
 }
+
+void mostrarCampoElec(){
+lcd.clear();
+int analogVal = analogRead(A0Pin);
+int digitalVal = digitalRead(D0Pin);
+lcd.setCursor(0,0);
+lcd.print("Analog Value:");
+Serial.print("Analog Value:");
+Serial.print(analogVal);
+lcd.print(analogVal);
+lcd.setCursor(0,1);
+lcd.print("Digital Value:");
+lcd.print(digitalVal);
+Serial.print("Digital Value:");
+Serial.print(digitalVal);
+}
+
+void mostrarPresencia(){
+int val = digitalRead(tracingPin);
+if(val == HIGH)
+{
+digitalWrite(ledPin, HIGH);
+Serial.print("Si hay presencia");
+}
+else
+{
+digitalWrite(ledPin, LOW);
+Serial.print("No hay presencia");
+}
+}
+
+void mostrarMetalTouch(){
+analogVal = analogRead(analogIn);
+SensorState=digitalRead(SensorPin);
+if(SensorState==HIGH)
+{
+digitalWrite(ledPin,HIGH);
+Serial.print("Si hay metal");
+}
+else
+{
+digitalWrite(ledPin,LOW);
+Serial.print("No hay metal");
+}
+}
+
 

@@ -22,3 +22,13 @@ const byte temperaturaNormal = 30;
 const byte temperaturaAlta = 32;
 unsigned long tiempoActual = 0;
  int segundos = 0;
+
+ //#include const int ledPin = 13;
+ const int A0Pin = A0;
+ #define D0Pin 8
+
+const int tracingPin = 8;
+
+
+const int SensorPin=7;
+const int analogIn = A0;
