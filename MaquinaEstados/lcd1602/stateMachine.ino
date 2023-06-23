@@ -163,11 +163,11 @@ void medirTemperaturaHumedadLuz(){
     mensajeMonitor();
     asyncTask1.Start();
     asyncTask2.Start();
-    if(tempValue >=25 ){
+    if(tempValue >=24 ){
         asyncTaskTimeOut10Seg.Stop();
         currentInput = Input::senialTres;
         updateInputStateMachine(currentInput);   
-    } else if( tempValue < 25) {
+    } else if( tempValue < 24) {
         asyncTaskTimeOut10Seg.Start();
     }
     
@@ -193,15 +193,7 @@ void activarAlarmaAmbiental(){
   lcd.print("Alarma");
   Serial.println("alarma");
   sonidoBloqueado();
-  tiempoActual = millis();
-  if ( (tempValue >= 25) && tiempoActual >= 5000){
-    currentInput = Input::senialCuatro;
-    updateInputStateMachine(currentInput);
-    segundos = 0;
-  } else if (tempValue < 24){
-    currentInput = Input::senialDos;
-    updateInputStateMachine(currentInput);
-  } 
+  asyncTaskContarSegundos.Start();
 }
 
 /*F**************************************************************************
@@ -390,6 +382,9 @@ void salidaMonitor()
 *****************************************************************************/
 void mensajeAlarma()
 {
+  lcd.clear();
+  asyncTask1.Stop();
+  asyncTask2.Stop();
   Serial.println("Alarma ambiental");
   Serial.println("1   2   3   4   5");
   Serial.println("            X");
@@ -398,6 +393,7 @@ void mensajeAlarma()
   lcd.print("Alarma ambi");
   lcd.setCursor(3, 1);
   lcd.setCursor(0, 0);
+
 }
 
 /*F**************************************************************************
@@ -432,10 +428,10 @@ void salidaAlarma()
 void mensajeAlerta()
 {
   lcd.clear();
+  asyncTaskContarSegundos.Stop();
   asyncTask1.Stop();
   asyncTask2.Stop();
   asyncTaskTimeOut6Seg.Start();
-
   lcd.print("alerta");
   Serial.println("Alerta Seguridad");
   Serial.println("1   2   3   4   5");

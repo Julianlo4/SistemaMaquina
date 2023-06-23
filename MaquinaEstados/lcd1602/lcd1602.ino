@@ -59,10 +59,12 @@ void mostrarLuz();
 void tiempoSalida1();
 void tiempoSalida2();
 void tiempoSalida3();
+void contarTiempo();
 
 AsyncTask asyncTaskTimeOut2Seg(2000, tiempoSalida1);
 AsyncTask asyncTaskTimeOut10Seg(10000,tiempoSalida2);
 AsyncTask asyncTaskTimeOut6Seg(6000, tiempoSalida3);
+AsyncTask asyncTaskContarSegundos(1000, true, contarTiempo );
 AsyncTask asyncTask1(2000, true,  mostrarTemp );
 AsyncTask asyncTask2(1000, true, mostrarLuz );
 AsyncTask asyncTaskSeguridad(500,sistemaClave);
@@ -147,6 +149,7 @@ void loop() {
   asyncTaskTimeOut10Seg.Update();
   asyncTask1.Update();
   asyncTask2.Update();
+  asyncTaskContarSegundos.Update();
   stateMachine.Update();
 }
 
@@ -253,6 +256,19 @@ void tiempoSalida3(){
   updateInputStateMachine(currentInput);
 }
 
+void contarTiempo(){
+  segundos++;
+  DEBUG("Segundos");
+  Serial.println(segundos);
+    if ( (tempValue >= 24) && segundos >= 5){
+    currentInput = Input::senialCuatro;
+    updateInputStateMachine(currentInput);
+    segundos = 0;
+  } else if (tempValue < 23){
+    currentInput = Input::senialDos;
+    updateInputStateMachine(currentInput);
+  } 
+}
 
 
 

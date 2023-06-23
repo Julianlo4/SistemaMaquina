@@ -21,3 +21,4 @@ const int ledPin = 13;
 const byte temperaturaNormal = 30;
 const byte temperaturaAlta = 32;
 unsigned long tiempoActual = 0;
+ int segundos = 0;
