@@ -60,6 +60,7 @@ void tiempoSalida1();
 void tiempoSalida2();
 void tiempoSalida3();
 void contarTiempo();
+void sensores();
 
 AsyncTask asyncTaskTimeOut2Seg(2000, tiempoSalida1);
 AsyncTask asyncTaskTimeOut10Seg(10000,tiempoSalida2);
@@ -68,6 +69,7 @@ AsyncTask asyncTaskContarSegundos(1000, true, contarTiempo );
 AsyncTask asyncTask1(2000, true,  mostrarTemp );
 AsyncTask asyncTask2(1000, true, mostrarLuz );
 AsyncTask asyncTaskSeguridad(500,sistemaClave);
+AsyncTask asyncTaskSensores(3000, true ,sensores);
 /********************************************//**
  *  State Machine control functions
  ***********************************************/
@@ -117,9 +119,18 @@ void inicializarComponentes();
 /********************************************//**
  *  Define global variables
  ***********************************************/
-int tempValue;
+int tempValue = 0;
 String inString = "";    
 uint64_t value = 0;
+const byte temperaturaNormal = 30;
+const byte temperaturaAlta = 32;
+unsigned long tiempoActual = 0;
+int segundos = 0;
+bool activarBloqueo = false;
+char password[6];
+char passwordCorrecta[] = "12345";
+unsigned char i = 0;
+byte intentos = 3;
 
 int SensorState=0;
 int analogVal = 0;
@@ -152,6 +163,7 @@ void loop() {
   asyncTaskTimeOut10Seg.Update();
   asyncTask1.Update();
   asyncTask2.Update();
+   asyncTaskSensores.Update();
   asyncTaskContarSegundos.Update();
   stateMachine.Update();
 }
@@ -266,13 +278,11 @@ void tiempoSalida3(){
 
 void contarTiempo(){
   segundos++;
-  DEBUG("Segundos");
-  Serial.println(segundos);
-    if ( (tempValue >= 24) && segundos >= 5){
+    if ( (tempValue > 28) && segundos >= 5){
     currentInput = Input::senialCuatro;
     updateInputStateMachine(currentInput);
     segundos = 0;
-  } else if (tempValue < 23){
+  } else if (tempValue < 28){
     currentInput = Input::senialDos;
     updateInputStateMachine(currentInput);
   } 
@@ -384,6 +394,13 @@ void mostrarTemp(){
   tempValue = DHT.getTemperature();
   Serial.println(tempValue, 1);
   lcd.print(tempValue, 1);
+      if(tempValue >28 ){
+        asyncTaskTimeOut10Seg.Stop();
+        currentInput = Input::senialTres;
+        updateInputStateMachine(currentInput);   
+    } else if( tempValue < 28) {
+        asyncTaskTimeOut10Seg.Start();
+    }
 }
 /*F**************************************************************************
 * NAME: mostrarLuz
@@ -410,49 +427,69 @@ void mostrarTemp(){
   lcd.print("");
 }
 
-void mostrarCampoElec(){
+int mostrarCampoElec(){
 lcd.clear();
-int analogVal = analogRead(A0Pin);
+//int analogVal = analogRead(A0Pin);
 int digitalVal = digitalRead(D0Pin);
-lcd.setCursor(0,0);
-lcd.print("Analog Value:");
-Serial.print("Analog Value:");
-Serial.print(analogVal);
-lcd.print(analogVal);
 lcd.setCursor(0,1);
 lcd.print("Digital Value:");
 lcd.print(digitalVal);
 Serial.print("Digital Value:");
 Serial.print(digitalVal);
+return digitalVal;
 }
 
-void mostrarPresencia(){
+bool mostrarPresencia(){
 int val = digitalRead(tracingPin);
 if(val == HIGH)
 {
-digitalWrite(ledPin, HIGH);
+ digitalWrite(LED_RED, HIGH);
 Serial.print("Si hay presencia");
+return true;
 }
 else
 {
-digitalWrite(ledPin, LOW);
+ digitalWrite(LED_RED, LOW);
 Serial.print("No hay presencia");
+return false;
 }
 }
 
-void mostrarMetalTouch(){
+bool mostrarMetalTouch(){
 analogVal = analogRead(analogIn);
 SensorState=digitalRead(SensorPin);
 if(SensorState==HIGH)
 {
 digitalWrite(ledPin,HIGH);
 Serial.print("Si hay metal");
+return true;
 }
 else
 {
 digitalWrite(ledPin,LOW);
 Serial.print("No hay metal");
+return false;
 }
 }
 
+
+void sensores(){
+  int campoElec = mostrarCampoElec();
+  bool presencia = mostrarPresencia();
+  bool metalTouch = mostrarMetalTouch();
+  Serial.print("sensores");
+  if( campoElec == 1 ){
+    currentInput = Input::senialCuatro;
+    updateInputStateMachine(currentInput);
+
+ }
+ if( presencia){
+    currentInput = Input::senialCuatro;
+    updateInputStateMachine(currentInput);
+ }
+  if(metalTouch){
+    currentInput = Input::senialCuatro;
+    updateInputStateMachine(currentInput);
+ }
+}
 

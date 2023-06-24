@@ -163,13 +163,7 @@ void medirTemperaturaHumedadLuz(){
     mensajeMonitor();
     asyncTask1.Start();
     asyncTask2.Start();
-    if(tempValue >=24 ){
-        asyncTaskTimeOut10Seg.Stop();
-        currentInput = Input::senialTres;
-        updateInputStateMachine(currentInput);   
-    } else if( tempValue < 24) {
-        asyncTaskTimeOut10Seg.Start();
-    }
+
     
 }
 
@@ -194,6 +188,7 @@ void activarAlarmaAmbiental(){
   Serial.println("alarma");
   sonidoBloqueado();
   asyncTaskContarSegundos.Start();
+  digitalWrite(LED_RED, LOW);
 }
 
 /*F**************************************************************************
@@ -211,9 +206,11 @@ void activarAlarmaAmbiental(){
 
 void ventasPuertas(){
   lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("VentanaPuerta");
   asyncTaskTimeOut2Seg.Start();
   Serial.println("Eventos ventanas ");
-  lcd.print("VentanaPuerta");
+  asyncTaskSensores.Start();
 }
 /*F**************************************************************************
 * NAME: updateInputStateMachine
@@ -306,8 +303,6 @@ void salidaSeguridad()
 void mensajeEvento()
 {
   lcd.clear();
-  asyncTask1.Stop();
-  asyncTask2.Stop();
   Serial.println("VentanaPuerta");
   Serial.println("1   2   3   4   5");
   Serial.println("    X        ");
@@ -393,7 +388,8 @@ void mensajeAlarma()
   lcd.print("Alarma ambi");
   lcd.setCursor(3, 1);
   lcd.setCursor(0, 0);
-
+  digitalWrite(LED_RED, HIGH);
+  digitalWrite(LED_BLUE, HIGH);
 }
 
 /*F**************************************************************************
@@ -437,7 +433,7 @@ void mensajeAlerta()
   Serial.println("1   2   3   4   5");
   Serial.println("                X");
   Serial.println();
-  
+   digitalWrite(LED_BLUE, HIGH);
 }
 
 /*F**************************************************************************
