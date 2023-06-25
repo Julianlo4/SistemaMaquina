@@ -478,18 +478,10 @@ void sensores(){
   bool presencia = mostrarPresencia();
   bool metalTouch = mostrarMetalTouch();
   Serial.print("sensores");
-  if( campoElec == 1 ){
+  if( campoElec == 1 || presencia || metalTouch){
     currentInput = Input::senialCuatro;
     updateInputStateMachine(currentInput);
 
  }
- if( presencia){
-    currentInput = Input::senialCuatro;
-    updateInputStateMachine(currentInput);
- }
-  if(metalTouch){
-    currentInput = Input::senialCuatro;
-    updateInputStateMachine(currentInput);
- }
+
 }
-
