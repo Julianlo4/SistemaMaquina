@@ -163,8 +163,7 @@ void medirTemperaturaHumedadLuz(){
     mensajeMonitor();
     asyncTask1.Start();
     asyncTask2.Start();
-
-    
+    asyncTaskTimeOut10Seg.Start();
 }
 
 /*F**************************************************************************
@@ -232,7 +231,7 @@ void updateInputStateMachine(int current)
     case eventoPuertaVentana:  ventasPuertas();    break;
     case monitorAmbiental:  medirTemperaturaHumedadLuz(); break;
     case alarmaAmbiental: activarAlarmaAmbiental(); break;
-    case alertaSeguridad: mensajeAlerta();  break;
+    case alertaSeguridad: sistemaAlerta();  break;
     default: Serial.println("state Unknown"); break;
   }
 }
@@ -390,6 +389,7 @@ void mensajeAlarma()
   lcd.setCursor(0, 0);
   digitalWrite(LED_RED, HIGH);
   digitalWrite(LED_BLUE, HIGH);
+  digitalWrite(LED_GREEN, LOW);
 }
 
 /*F**************************************************************************
@@ -424,16 +424,10 @@ void salidaAlarma()
 void mensajeAlerta()
 {
   lcd.clear();
-  asyncTaskContarSegundos.Stop();
-  asyncTask1.Stop();
-  asyncTask2.Stop();
-  asyncTaskTimeOut6Seg.Start();
-  lcd.print("alerta");
   Serial.println("Alerta Seguridad");
   Serial.println("1   2   3   4   5");
   Serial.println("                X");
   Serial.println();
-   digitalWrite(LED_BLUE, HIGH);
 }
 
 /*F**************************************************************************
@@ -451,4 +445,19 @@ void mensajeAlerta()
 void salidaAlerta()
 {
   DEBUG("Dejando alerta seguridad");
+}
+
+
+void sistemaAlerta(){
+  asyncTaskTimeOut2Seg.Stop();
+  asyncTaskTimeOut10Seg.Stop();
+  asyncTaskTimeOut6Seg.Start();
+  asyncTaskContarSegundos.Stop();
+  asyncTask1.Stop();
+  asyncTask2.Stop();
+  asyncTaskSensores.Stop();
+  lcd.print("alerta");
+  digitalWrite(LED_RED, LOW);
+  digitalWrite(LED_BLUE, HIGH);
+  digitalWrite(LED_GREEN, LOW);
 }

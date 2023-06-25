@@ -477,8 +477,8 @@ void sensores(){
   int campoElec = mostrarCampoElec();
   bool presencia = mostrarPresencia();
   bool metalTouch = mostrarMetalTouch();
-  Serial.print("sensores");
   if( campoElec == 1 || presencia || metalTouch){
+    Serial.print("sensores activados");
     currentInput = Input::senialCuatro;
     updateInputStateMachine(currentInput);
 
