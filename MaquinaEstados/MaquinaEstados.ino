@@ -69,7 +69,7 @@ AsyncTask asyncTaskContarSegundos(1000, true, contarTiempo );
 AsyncTask asyncTask1(2000, true,  mostrarTemp );
 AsyncTask asyncTask2(1000, true, mostrarLuz );
 AsyncTask asyncTaskSeguridad(500,sistemaClave);
-AsyncTask asyncTaskSensores(3000, true ,sensores);
+AsyncTask asyncTaskSensores(500, true ,sensores);
 /********************************************//**
  *  State Machine control functions
  ***********************************************/
