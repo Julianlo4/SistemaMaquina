@@ -10,20 +10,20 @@
 #include <Servo.h>
 #include "ConstumChar.h"
 
-/********************************************//**
+/**********************************************
  *  Temperature sensor control functions
  ***********************************************/
 #include "DHTStable.h"
 DHTStable DHT;
 
-/********************************************//**
+/**********************************************
  *  LCD control functions
  ***********************************************/
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
 #define DEBUG(a) Serial.print(millis()); Serial.print(": "); Serial.println(a);
 
-/********************************************//**
+/*********************************************
  *  keypad control functions
  ***********************************************/
 #include <Keypad.h>
@@ -35,23 +35,23 @@ char keys[KEYPAD_ROWS][KEYPAD_COLS] = {
 };
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, KEYPAD_ROWS, KEYPAD_COLS);
 
-/********************************************//**
- *  Update cursor control Task control functions
+/**********************************************
+ Update cursor control Task control functions
  ***********************************************/
 void actualizarCursor();
 
-/********************************************//**
- *  Segurity control Task control functions
+/**********************************************
+  Segurity control Task control functions
  ***********************************************/
 void sistemaClave();
 
-/********************************************//**
- *  Message welcome control Task control functions
+/**********************************************
+ Message welcome control Task control functions
  ***********************************************/
 void mensajeBienvenida();
 
-/********************************************//**
- *  Asynchronous Task control functions
+/**********************************************
+ Asynchronous Task control functions
  ***********************************************/
 #include "AsyncTaskLib.h"
 void mostrarTemp();
@@ -70,8 +70,8 @@ AsyncTask asyncTask1(2000, true,  mostrarTemp );
 AsyncTask asyncTask2(1000, true, mostrarLuz );
 AsyncTask asyncTaskSeguridad(500,sistemaClave);
 AsyncTask asyncTaskSensores(500, true ,sensores);
-/********************************************//**
- *  State Machine control functions
+/**********************************************
+ State Machine control functions
  ***********************************************/
 #include "StateMachineLib.h"
 /** An enum type. 
@@ -105,10 +105,8 @@ Input currentInput;
 /*! Create new StateMachine 5 states and 8 transitions */
 StateMachine stateMachine(5, 8);
 
-/********************************************//**
-
-/********************************************//**
- *  Sound control functions
+/**********************************************
+ Sound control functions
  ***********************************************/
  #include "sound.h"
 void sonidoEntrar();
@@ -116,8 +114,8 @@ void sonidoErrado();
 void sonidoBloqueado();
 void inicializarComponentes();
 
-/********************************************//**
- *  Define global variables
+/**********************************************
+ Define global variables
  ***********************************************/
 int tempValue = 0;
 String inString = "";    
@@ -168,19 +166,11 @@ void loop() {
   stateMachine.Update();
 }
 
-/*F**************************************************************************
-* NAME: inicilizarComponentes
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* initialize components like pines,leds etc.
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
-
+/**
+  * @brief initialize components like pines,leds etc.
+  * @param none
+  * @return none
+*/
 void inicilizarComponentes(){
   Serial.begin(115200);
   lcd.begin(16, 2);
@@ -200,18 +190,11 @@ void inicilizarComponentes(){
  
 }
 
-/*F**************************************************************************
-* NAME: actualizarCursor
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Toggles the cursor on an LCD display based on a time-based condition
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Toggles the cursor on an LCD display based on a time-based condition
+  * @param none
+  * @return none
+*/
 void actualizarCursor() {
   if (millis() / 250 % 2 == 0 ) {
     lcd.cursor();
@@ -219,18 +202,11 @@ void actualizarCursor() {
     lcd.noCursor();
   }
 }
-/*F**************************************************************************
-* NAME: tiempoSalida1
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the completion of Time T1
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Handles the completion of Time T1
+  * @param none
+  * @return none
+*/
 void tiempoSalida1(){
   Serial.print("tiempo 1");
   DEBUG("T1_END");
@@ -238,43 +214,34 @@ void tiempoSalida1(){
   currentInput = Input::senialDos;
   updateInputStateMachine(currentInput);
 }
-/*F**************************************************************************
-* NAME: tiempoSalida2
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the completion of Time T2
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
-
+/**
+  * @brief Handles the completion of Time T2
+  * @param none
+  * @return none
+*/
 void tiempoSalida2(){
   DEBUG("T2_END");
   currentInput = Input::senialUno;
    lcd.clear();
   updateInputStateMachine(currentInput);
 }
-/*F**************************************************************************
-* NAME: tiempoSalida3
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the completion of Time T3
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Handles the completion of Time T3
+  * @param none
+  * @return none
+*/
 
 void tiempoSalida3(){
   DEBUG("T3_END");
   currentInput = Input::senialUno;
   updateInputStateMachine(currentInput);
 }
+
+/**
+  * @brief lets count the time
+  * @param none
+  * @return none
+*/
 
 void contarTiempo(){
   segundos++;
@@ -287,22 +254,11 @@ void contarTiempo(){
     updateInputStateMachine(currentInput);
   } 
 }
-
-
-
-
-/*F**************************************************************************
-* NAME: sonidoEntrar
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Plays a sequence of tones on a buzzer to create a sound effect
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Plays a sequence of tones on a buzzer to create a sound effect
+  * @param none
+  * @return none
+*/
 void sonidoEntrar(){
 for (int i = 0; i < 25; i++) {			// bucle repite 25 veces
       int duracion = 1000 / duraciones[i];		// duracion de la nota en milisegundos
@@ -312,35 +268,21 @@ for (int i = 0; i < 25; i++) {			// bucle repite 25 veces
       noTone(BUZZER);	
 }
 }
-/*F**************************************************************************
-* NAME: sonidoErrado
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Plays an error sound on a buzzer
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Plays an error sound on a buzzer
+  * @param none
+  * @return none
+*/
 void sonidoErrado(){
       tone(BUZZER, 1000, 100);
       delay(100);
       noTone(BUZZER);	
 }
-/*F**************************************************************************
-* NAME: sonidoBloqueado
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Plays a sequence of tones on a buzzer to create a "blocked" sound effect
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Plays a sequence of tones on a buzzer to create a "blocked" sound effect
+  * @param none
+  * @return none
+*/
 void sonidoBloqueado(){
 for (int i = 0; i < 5; i++) {			// bucle repite 25 veces
       int duracion = 1000 / duraciones[i];		// duracion de la nota en milisegundos
@@ -350,18 +292,11 @@ for (int i = 0; i < 5; i++) {			// bucle repite 25 veces
       noTone(BUZZER);	
 }
 }
-/*F**************************************************************************
-* NAME: mostrarTemp
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Reads humidity and temperature data from a DHT11 sensor and displays it on both the Serial monitor and an LCD display
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Reads humidity and temperature data from a DHT11 sensor and displays it on both the Serial monitor and an LCD display
+  * @param none
+  * @return none
+*/
 void mostrarTemp(){
   lcd.clear();
   Serial.println("nivel de humedad - temperatura");
@@ -402,18 +337,11 @@ void mostrarTemp(){
         asyncTaskTimeOut10Seg.Start();
     }
 }
-/*F**************************************************************************
-* NAME: mostrarLuz
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Reads the light level from a photocell and displays it on both the Serial monitor and an LCD display
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Reads the light level from a photocell and displays it on both the Serial monitor and an LCD display
+  * @param void
+  * @return none
+*/
   void mostrarLuz(void){
   int outputValue = 0;
    Serial.println("nivel de luz");
@@ -426,7 +354,11 @@ void mostrarTemp(){
   lcd.setCursor(11, 0);
   lcd.print("");
 }
-
+/**
+  * @brief Display and return the digital value of the electric field sensor
+  * @param none
+  * @return The digital value of the electric field sensor
+*/
 int mostrarCampoElec(){
 lcd.clear();
 //int analogVal = analogRead(A0Pin);
@@ -438,7 +370,11 @@ Serial.print("Digital Value:");
 Serial.print(digitalVal);
 return digitalVal;
 }
-
+/**
+  * @brief Check if there is presence detected by the sensor
+  * @param none
+  * @return True if presence is detected, False otherwise
+*/
 bool mostrarPresencia(){
 int val = digitalRead(tracingPin);
 if(val == HIGH)
@@ -454,7 +390,11 @@ Serial.print("No hay presencia");
 return false;
 }
 }
-
+/**
+  * @brief Check if there is metal touch detected by the sensor
+  * @param none
+  * @return True if metal touch is detected, False otherwise
+*/
 bool mostrarMetalTouch(){
 analogVal = analogRead(analogIn);
 SensorState=digitalRead(SensorPin);
@@ -471,8 +411,11 @@ Serial.print("No hay metal");
 return false;
 }
 }
-
-
+/**
+  * @brief Activate sensors and update input state if any of the conditions are met
+  * @param none
+  * @return none
+*/
 void sensores(){
   int campoElec = mostrarCampoElec();
   bool presencia = mostrarPresencia();

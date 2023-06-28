@@ -1,16 +1,9 @@
 
-/*F**************************************************************************
-* NAME: setupStateMachine
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Setup the State Machine
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Setup the State Machine
+  * @param none
+  * @return none
+*/
 void setupStateMachine()
 {
   // Add transitions
@@ -40,19 +33,11 @@ void setupStateMachine()
   stateMachine.SetOnLeaving(alarmaAmbiental, salidaAlarma);
   stateMachine.SetOnLeaving(alertaSeguridad, salidaAlerta);
 }
-
-/*F**************************************************************************
-* NAME: readData
-*----------------------------------------------------------------------------
-* PARAMS:   nonce
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Read data from serial port
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Read data from serial port
+  * @param none
+  * @return none
+*/
 void readData(){
   
   bool flagData = false;
@@ -81,19 +66,11 @@ void readData(){
   }
 
 }
-
-/*F**************************************************************************
-* NAME: sistemaClave
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Implements a password-based system to control access and performs actions based on the entered password
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Implements a password-based system to control access and performs actions based on the entered password
+  * @param none
+  * @return none
+*/
 void sistemaClave(){
  lcd.clear();
  lcd.print("Ingrese clave");
@@ -145,19 +122,11 @@ void sistemaClave(){
       i = 0;
       }
 }
-
-/*F**************************************************************************
-* NAME: medirTemperaturaHumedadLuz
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Initiates the measurement of temperature, humidity, and light levels and performs actions based on the measured values
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Initiates the measurement of temperature, humidity, and light levels and performs actions based on the measured values
+  * @param none
+  * @return none
+*/
 void medirTemperaturaHumedadLuz(){ 
     lcd.clear();
     mensajeMonitor();
@@ -165,19 +134,11 @@ void medirTemperaturaHumedadLuz(){
     asyncTask2.Start();
     asyncTaskTimeOut10Seg.Start();
 }
-
-/*F**************************************************************************
-* NAME: activarAlarmaAmbiental
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Activates the environmental alarm based on temperature readings and performs actions accordingly
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Activates the environmental alarm based on temperature readings and performs actions accordingly
+  * @param none
+  * @return none
+*/
 void activarAlarmaAmbiental(){
   asyncTaskTimeOut2Seg.Stop();
   asyncTaskTimeOut10Seg.Stop();
@@ -189,20 +150,11 @@ void activarAlarmaAmbiental(){
   asyncTaskContarSegundos.Start();
   digitalWrite(LED_RED, LOW);
 }
-
-/*F**************************************************************************
-* NAME: ventasPuertas
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles events related to window and door operations
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
-
+/**
+  * @brief Handles events related to window and door operations
+  * @param none
+  * @return none
+*/
 void ventasPuertas(){
   lcd.clear();
   lcd.setCursor(0,0);
@@ -211,18 +163,11 @@ void ventasPuertas(){
   Serial.println("Eventos ventanas ");
   asyncTaskSensores.Start();
 }
-/*F**************************************************************************
-* NAME: updateInputStateMachine
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* update State Machine inputs from temperature sensor
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief update State Machine inputs from temperature sensor
+  * @param none
+  * @return none
+*/
 void updateInputStateMachine(int current)
 {
   switch (current)
@@ -235,19 +180,11 @@ void updateInputStateMachine(int current)
     default: Serial.println("state Unknown"); break;
   }
 }
-
-/*F**************************************************************************
-* NAME: mensajeBienvenida
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Displays a welcome message and initializes the system
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Displays a welcome message and initializes the system
+  * @param none
+  * @return none
+*/
 void mensajeBienvenida() {
   Serial.println("Bienvenido");
   Serial.println("1   2   3   4   5");
@@ -268,37 +205,21 @@ void mensajeBienvenida() {
   sistemaClave();
 }
 
-
-/*F**************************************************************************
-* NAME: salidaSeguridad
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the transition from the security system to events
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Handles the transition from the security system to events
+  * @param none
+  * @return none
+*/
 void salidaSeguridad()
 {
   DEBUG("Dejando sistema de seguridad");
 
 }
-
-/*F**************************************************************************
-* NAME: mensajeEvento
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Displays a message related to an event
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Displays a message related to an event
+  * @param none
+  * @return none
+*/
 void mensajeEvento()
 {
   lcd.clear();
@@ -307,35 +228,20 @@ void mensajeEvento()
   Serial.println("    X        ");
   Serial.println();
 }
-
-/*F**************************************************************************
-* NAME: salidaEvento
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the transition from events to the environmental monitoring system
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Handles the transition from events to the environmental monitoring system
+  * @param none
+  * @return none
+*/
 void salidaEvento()
 {
   DEBUG("Dejando eventos");
 }
-/*F**************************************************************************
-* NAME: mensajeMonitor
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Displays a message related to the environmental monitoring system
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Displays a message related to the environmental monitoring system
+  * @param none
+  * @return none
+*/
 void mensajeMonitor()
 {
   lcd.clear();
@@ -344,36 +250,19 @@ void mensajeMonitor()
   Serial.println("        X    ");
   Serial.println();
 }
-/*F**************************************************************************
-* NAME: salidaMonitor
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the transition from the environmental monitoring system to the environmental alarm system
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Handles the transition from the environmental monitoring system to the environmental alarm system
+  * @return none
+*/
 void salidaMonitor()
 {
    DEBUG("Dejando monitor ambiental");
 }
-
-
-/*F**************************************************************************
-* NAME: mensajeAlarma
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Displays a message related to the environmental alarm system
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Displays a message related to the environmental alarm system
+  * @param none
+  * @return none
+*/
 void mensajeAlarma()
 {
   lcd.clear();
@@ -391,36 +280,20 @@ void mensajeAlarma()
   digitalWrite(LED_BLUE, HIGH);
   digitalWrite(LED_GREEN, LOW);
 }
-
-/*F**************************************************************************
-* NAME: salidaAlarma
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the transition from the environmental alarm system to the security alert system
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Handles the transition from the environmental alarm system to the security alert system
+  * @param none
+  * @return none
+*/
 void salidaAlarma()
 {
   DEBUG("Dejando alarma ambiental");
 }
-
-/*F**************************************************************************
-* NAME: mensajeAlerta
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Displays a message related to the security alert system and starts a timeout task
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Displays a message related to the security alert system and starts a timeout task
+  * @param none
+  * @return none
+*/
 void mensajeAlerta()
 {
   lcd.clear();
@@ -429,25 +302,20 @@ void mensajeAlerta()
   Serial.println("                X");
   Serial.println();
 }
-
-/*F**************************************************************************
-* NAME: salidaAlerta(
-*----------------------------------------------------------------------------
-* PARAMS:   none
-* return:   none
-*----------------------------------------------------------------------------
-* PURPOSE:
-* Handles the transition from the security alert system to the events system
-*----------------------------------------------------------------------------
-* NOTE:
-* 
-*****************************************************************************/
+/**
+  * @brief Handles the transition from the security alert system to the events system
+  * @param none
+  * @return none
+*/
 void salidaAlerta()
 {
   DEBUG("Dejando alerta seguridad");
 }
-
-
+/**
+  * @brief Activate the alert system by stopping and starting the necessary tasks and changing LED states.
+  * @param none
+  * @return none
+*/
 void sistemaAlerta(){
   asyncTaskTimeOut2Seg.Stop();
   asyncTaskTimeOut10Seg.Stop();
