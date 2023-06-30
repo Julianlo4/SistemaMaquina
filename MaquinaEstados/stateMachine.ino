@@ -162,6 +162,9 @@ void ventasPuertas(){
   asyncTaskTimeOut2Seg.Start();
   Serial.println("Eventos ventanas ");
   asyncTaskSensores.Start();
+   digitalWrite(LED_RED, LOW);
+   digitalWrite(LED_BLUE, LOW);
+   digitalWrite(LED_GREEN, LOW);
 }
 /**
   * @brief update State Machine inputs from temperature sensor
@@ -176,7 +179,7 @@ void updateInputStateMachine(int current)
     case eventoPuertaVentana:  ventasPuertas();    break;
     case monitorAmbiental:  medirTemperaturaHumedadLuz(); break;
     case alarmaAmbiental: activarAlarmaAmbiental(); break;
-    case alertaSeguridad: sistemaAlerta();  break;
+    case alertaSeguridad:   break;
     default: Serial.println("state Unknown"); break;
   }
 }
@@ -301,6 +304,7 @@ void mensajeAlerta()
   Serial.println("1   2   3   4   5");
   Serial.println("                X");
   Serial.println();
+  sistemaAlerta();
 }
 /**
   * @brief Handles the transition from the security alert system to the events system
@@ -317,9 +321,9 @@ void salidaAlerta()
   * @return none
 */
 void sistemaAlerta(){
+  asyncTaskTimeOut6Seg.Start();
   asyncTaskTimeOut2Seg.Stop();
   asyncTaskTimeOut10Seg.Stop();
-  asyncTaskTimeOut6Seg.Start();
   asyncTaskContarSegundos.Stop();
   asyncTask1.Stop();
   asyncTask2.Stop();
